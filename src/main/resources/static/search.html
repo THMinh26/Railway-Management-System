@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Trains - Railway Booking</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>🚂 Railway Booking</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html" class="active">Search Trains</a></li>
+                    <li><a href="bookings.html">My Bookings</a></li>
+                    <li><a href="messages.html">Messages</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <div class="container">
+                <div class="search-card">
+                    <h2>Search Available Trains</h2>
+                    <form id="searchForm">
+                        <div class="form-row">
+                            <div class="form-group autocomplete-wrapper">
+                                <label for="searchSource">From</label>
+                                <input type="text" id="searchSource" name="source" placeholder="Enter source station" required autocomplete="off">
+                                <div id="searchSource-suggestions" class="suggestions-box"></div>
+                            </div>
+                            <div class="form-group autocomplete-wrapper">
+                                <label for="searchDestination">To</label>
+                                <input type="text" id="searchDestination" name="destination" placeholder="Enter destination station" required autocomplete="off">
+                                <div id="searchDestination-suggestions" class="suggestions-box"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Journey Date</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Search Trains</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="resultsSection" class="results-section" style="display: none;">
+                    <h3>Available Trains</h3>
+                    <div id="trainsList" class="trains-list"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Railway Booking System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/animations.js"></script>
+    <script src="js/autocomplete.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Times & Tickets - National Railway</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-links">
+                    <a href="#">Help & Support</a>
+                    <a href="admin.html">Admin Panel</a>
+                </div>
+                <div class="top-auth">
+                    <a href="login.html" class="btn-link">Sign In</a>
+                    <a href="register.html" class="btn-link">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <rect width="40" height="40" fill="#E31E24" rx="4"/>
+                            <text x="20" y="28" font-size="24" font-weight="bold" fill="white" text-anchor="middle">NR</text>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>National Railway</h1>
+                        <span>Official Booking Portal</span>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="times.html" class="active">Train Times</a></li>
+                    <li><a href="bookings.html">My Bookings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Train Times & Tickets</h1>
+                <p>View all available trains, schedules, and fares</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="container">
+                <div class="filter-card">
+                    <h3>Filter Trains</h3>
+                    <form id="filterForm" class="filter-form">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="filterSource">From</label>
+                                <input type="text" id="filterSource" placeholder="Departure station" list="stations">
+                            </div>
+                            <div class="form-group">
+                                <label for="filterDestination">To</label>
+                                <input type="text" id="filterDestination" placeholder="Arrival station" list="stations">
+                            </div>
+                            <div class="form-group">
+                                <label for="filterDate">Date</label>
+                                <input type="date" id="filterDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="filterType">Train Type</label>
+                                <select id="filterType">
+                                    <option value="">All Types</option>
+                                    <option value="EXPRESS">Express</option>
+                                    <option value="SUPERFAST">Superfast</option>
+                                    <option value="PASSENGER">Passenger</option>
+                                    <option value="MAIL">Mail</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn-search">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="white">
+                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/>
+                                    </svg>
+                                    Filter
+                                </button>
+                                <button type="button" id="clearFilter" class="btn-clear">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                    <datalist id="stations">
+                        <option value="Mumbai">
+                        <option value="Delhi">
+                        <option value="Bangalore">
+                        <option value="Chennai">
+                        <option value="Kolkata">
+                        <option value="Hyderabad">
+                        <option value="Pune">
+                        <option value="Ahmedabad">
+                    </datalist>
+                </div>
+            </div>
+        </section>
+
+        <!-- Train List Section -->
+        <section class="trains-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Available Trains</h2>
+                    <div class="sort-options">
+                        <label>Sort by:</label>
+                        <select id="sortBy">
+                            <option value="departure">Departure Time</option>
+                            <option value="fare">Fare (Low to High)</option>
+                            <option value="fare-high">Fare (High to Low)</option>
+                            <option value="duration">Duration</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading trains...</p>
+                </div>
+
+                <!-- Train Cards Container -->
+                <div id="trainsList" class="trains-list">
+                    <!-- Train cards will be dynamically inserted here -->
+                </div>
+
+                <!-- No Results Message -->
+                <div id="noResults" class="no-results" style="display: none;">
+                    <svg width="100" height="100" viewBox="0 0 100 100" fill="#ccc">
+                        <path d="M50 10 L90 90 L10 90 Z"/>
+                        <text x="50" y="60" font-size="40" fill="white" text-anchor="middle">!</text>
+                    </svg>
+                    <h3>No trains found</h3>
+                    <p>Try adjusting your filters or search for different routes</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Confirm Booking</h2>
+            <div id="modalTrainDetails" class="modal-details">
+                <!-- Train details will be inserted here -->
+            </div>
+            <form id="bookingForm" class="booking-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passengerName">Passenger Name *</label>
+                        <input type="text" id="passengerName" required placeholder="Full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="passengerAge">Age *</label>
+                        <input type="number" id="passengerAge" min="1" max="120" required placeholder="Age">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passengerGender">Gender *</label>
+                        <select id="passengerGender" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfSeats">Number of Seats *</label>
+                        <input type="number" id="numberOfSeats" min="1" max="6" value="1" required>
+                    </div>
+                </div>
+                <div class="fare-summary">
+                    <div class="fare-row">
+                        <span>Base Fare:</span>
+                        <span id="baseFare">₹0.00</span>
+                    </div>
+                    <div class="fare-row">
+                        <span>Number of Seats:</span>
+                        <span id="seatsCount">1</span>
+                    </div>
+                    <div class="fare-row total">
+                        <span>Total Fare:</span>
+                        <span id="totalFare">₹0.00</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelBooking">Cancel</button>
+                    <button type="submit" class="btn-confirm">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 National Railway. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/animations.js"></script>
+    <script src="js/times.js"></script>
+    <script>
+        createScrollProgress();
+    </script>
+</body>
+</html>
