@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Mode Test - Railway Booking</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Load config.js FIRST -->
+    <script src="js/config.js"></script>
+    <!-- Load mock-api.js BEFORE other scripts -->
+    <script src="js/mock-api.js"></script>
+</head>
+<body>
+    <div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px;">
+        <h1>🎭 Mock Mode Test Page</h1>
+        
+        <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2>✅ Mock Mode Status</h2>
+            <p id="mockStatus" style="font-size: 18px; font-weight: bold;"></p>
+            <p>Bạn có thể test toàn bộ frontend mà không cần backend/database!</p>
+        </div>
+        
+        <div style="background: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>📝 Test Accounts</h3>
+            <ul>
+                <li><strong>Admin:</strong> username="admin", password="admin123"</li>
+                <li><strong>User:</strong> username="user", password="user123"</li>
+            </ul>
+        </div>
+        
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h3>🧪 Quick API Tests</h3>
+            
+            <div style="margin: 20px 0;">
+                <h4>1. Test Login</h4>
+                <button onclick="testLogin()" class="btn-primary" style="padding: 10px 20px; margin: 5px;">
+                    Test Login
+                </button>
+                <pre id="loginResult" style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-top: 10px;"></pre>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>2. Test Get Trains</h4>
+                <button onclick="testGetTrains()" class="btn-primary" style="padding: 10px 20px; margin: 5px;">
+                    Get All Trains
+                </button>
+                <pre id="trainsResult" style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-top: 10px; max-height: 300px; overflow-y: auto;"></pre>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>3. Test Search Trains</h4>
+                <input type="text" id="searchSource" placeholder="Source (e.g., Hà Nội)" style="padding: 8px; margin: 5px;">
+                <input type="text" id="searchDest" placeholder="Destination (e.g., Đà Nẵng)" style="padding: 8px; margin: 5px;">
+                <button onclick="testSearchTrains()" class="btn-primary" style="padding: 10px 20px; margin: 5px;">
+                    Search
+                </button>
+                <pre id="searchResult" style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-top: 10px;"></pre>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>4. Test Admin Stats</h4>
+                <button onclick="testAdminStats()" class="btn-primary" style="padding: 10px 20px; margin: 5px;">
+                    Get Stats
+                </button>
+                <pre id="statsResult" style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-top: 10px;"></pre>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <h3>🚀 Test Pages</h3>
+            <p>Sau khi test API thành công, hãy thử các trang:</p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">
+                <a href="index.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none;">Homepage</a>
+                <a href="login.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none;">Login</a>
+                <a href="register.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none;">Register</a>
+                <a href="times.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none;">Train Times</a>
+                <a href="admin.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none;">Admin Panel</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check mock mode status
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusEl = document.getElementById('mockStatus');
+            if (typeof MOCK_MODE !== 'undefined' && MOCK_MODE === true) {
+                statusEl.textContent = '✅ MOCK MODE ENABLED - No backend needed!';
+                statusEl.style.color = '#00AA4F';
+            } else {
+                statusEl.textContent = '⚠️ Real API Mode - Backend required';
+                statusEl.style.color = '#FF6B00';
+            }
+        });
+        
+        // Test functions
+        async function testLogin() {
+            const result = document.getElementById('loginResult');
+            result.textContent = 'Loading...';
+            
+            const response = await apiCall(CONFIG.ENDPOINTS.LOGIN, {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: 'user',
+                    password: 'user123'
+                })
+            });
+            
+            result.textContent = JSON.stringify(response, null, 2);
+        }
+        
+        async function testGetTrains() {
+            const result = document.getElementById('trainsResult');
+            result.textContent = 'Loading...';
+            
+            const response = await apiCall(CONFIG.ENDPOINTS.TRAINS);
+            
+            result.textContent = JSON.stringify(response, null, 2);
+        }
+        
+        async function testSearchTrains() {
+            const result = document.getElementById('searchResult');
+            const source = document.getElementById('searchSource').value;
+            const dest = document.getElementById('searchDest').value;
+            
+            result.textContent = 'Loading...';
+            
+            const url = `${CONFIG.ENDPOINTS.SEARCH_TRAINS}?source=${source}&destination=${dest}&date=2025-11-15`;
+            const response = await apiCall(url);
+            
+            result.textContent = JSON.stringify(response, null, 2);
+        }
+        
+        async function testAdminStats() {
+            const result = document.getElementById('statsResult');
+            result.textContent = 'Loading...';
+            
+            const response = await apiCall(CONFIG.ENDPOINTS.ADMIN_STATS);
+            
+            result.textContent = JSON.stringify(response, null, 2);
+        }
+    </script>
+</body>
+</html>
