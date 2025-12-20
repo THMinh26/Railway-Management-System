@@ -7,22 +7,20 @@ function getTrainData() {
     return {
         id: trainId || '1',
         trainNumber: 'TR001',
-        trainName: 'Hanoi Express',
+        trainName: 'Hanoi',
         source: 'Hanoi',
         destination: 'Ho Chi Minh City',
         departureTime: '06:00',
         arrivalTime: '18:00',
         date: '2025-11-10',
         duration: '12h 00m',
-        fare: 1500000,
-        trainType: 'Express'
+        fare: 1500000
     };
 }
 
 // Display train information
 function displayTrainInfo() {
     document.getElementById('trainName').textContent = train.trainName;
-    document.getElementById('trainType').textContent = train.trainType;
     document.getElementById('trainNumber').textContent = train.trainNumber;
     document.getElementById('source').textContent = train.source;
     document.getElementById('destination').textContent = train.destination;
@@ -151,46 +149,57 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Confirm booking
     document.getElementById('confirmBooking').addEventListener('click', function() {
-    // Validate form
-    const form = document.getElementById('bookingForm');
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
-    
-    // Check payment details if credit card selected
-    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-    if (paymentMethod === 'credit') {
-        const cardNumber = document.getElementById('cardNumber').value;
-        const expiry = document.getElementById('expiry').value;
-        const cvv = document.getElementById('cvv').value;
-        
-        if (!cardNumber || !expiry || !cvv) {
-            alert('Please fill in all card details');
+        // Validate form
+        const form = document.getElementById('bookingForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
             return;
         }
-    }
-    
-    // Show loading
-    this.disabled = true;
-    this.innerHTML = '<span class="spinner"></span> Processing...';
-    
-    // Simulate payment processing
-    setTimeout(() => {
-        // Generate booking reference
-        const bookingRef = 'BK' + Date.now().toString().slice(-6);
-        
-        // Show success message
-        showSuccessModal(bookingRef);
-        
-        this.disabled = false;
-        this.innerHTML = 'Confirm & Pay';
-    }, 2000);
+
+        // Validate coach and seat number
+        const coach = document.getElementById('coach').value;
+        const seatNumber = document.getElementById('seatNumber').value;
+        if (!coach) {
+            alert('Please select a coach');
+            return;
+        }
+        if (!seatNumber) {
+            alert('Please enter a seat number');
+            return;
+        }
+
+        // Check payment details if credit card selected
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+        if (paymentMethod === 'credit') {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            if (!cardNumber || !expiry || !cvv) {
+                alert('Please fill in all card details');
+                return;
+            }
+        }
+
+        // Show loading
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner"></span> Processing...';
+
+        // Simulate payment processing
+        setTimeout(() => {
+            // Generate booking reference
+            const bookingRef = 'BK' + Date.now().toString().slice(-6);
+
+            // Show success message with coach and seat
+            showSuccessModal(bookingRef, coach, seatNumber);
+
+            this.disabled = false;
+            this.innerHTML = 'Confirm & Pay';
+        }, 2000);
     });
 });
 
 // Show success modal
-function showSuccessModal(bookingRef) {
+function showSuccessModal(bookingRef, coach, seatNumber) {
     const modal = document.createElement('div');
     modal.className = 'success-modal';
     modal.innerHTML = `
@@ -204,6 +213,8 @@ function showSuccessModal(bookingRef) {
                 <span class="ref-code">${bookingRef}</span>
             </div>
             <div class="success-details">
+                <p><strong>Coach:</strong> ${coach}</p>
+                <p><strong>Seat Number:</strong> ${seatNumber}</p>
                 <p>📧 Confirmation email sent to your email</p>
                 <p>📱 E-ticket will be sent to your phone</p>
             </div>
@@ -214,7 +225,6 @@ function showSuccessModal(bookingRef) {
         </div>
     `;
     document.body.appendChild(modal);
-    
     // Animate in
     setTimeout(() => modal.classList.add('show'), 10);
 }
