@@ -1,3 +1,31 @@
+.station.departure {
+    /* removed to avoid override */
+}
+
+/* Force train-route to be two side-by-side columns and ensure top alignment */
+.train-route {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 2rem !important;
+}
+.train-route .station {
+    width: 50% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.train-route .station .station-name,
+.train-route .station .time,
+.train-route .station .date {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.station.arrival {
+    /* removed to avoid override */
+}
 * {
     margin: 0;
     padding: 0;
@@ -1646,6 +1674,25 @@ a, button, input, select {
     align-items: end;
 }
 
+/* Ensure filter buttons stack and have spacing on the right column */
+.filter-row .form-group:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+.filter-row .form-group:last-child .btn-search,
+.filter-row .form-group:last-child .btn-clear {
+    width: 100%;
+}
+.filter-row .form-group:last-child .btn-search {
+    padding: 1rem 1.25rem;
+}
+.filter-row .form-group:last-child .btn-clear {
+    margin-top: 0;
+}
+
 .filter-row .form-group {
     display: flex;
     flex-direction: column;
@@ -1784,11 +1831,14 @@ a, button, input, select {
 /* Train Header */
 .train-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid var(--light-gray);
+    gap: 1rem;
+    position: relative;
+}
 }
 
 .train-number {
@@ -1835,23 +1885,29 @@ a, button, input, select {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--dark-navy);
+    margin-left: auto;
+    white-space: nowrap;
+}
 }
 
 /* Train Route */
 .train-route {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
     margin-bottom: 1.5rem;
-    align-items: center;
+    align-items: start;
 }
 
 .station {
+    display: block;
     text-align: left;
+    padding-bottom: 0.5rem;
 }
 
 .station.arrival {
     text-align: right;
+    padding-bottom: 0.5rem;
 }
 
 .station-name {
@@ -1944,6 +2000,8 @@ a, button, input, select {
     align-items: center;
     padding-top: 1rem;
     border-top: 2px solid var(--light-gray);
+    gap: 1.5rem;
+}
 }
 
 .fare-info {
@@ -1961,11 +2019,19 @@ a, button, input, select {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--success-green);
+    margin-bottom: 0.5rem;
+}
 }
 
 .train-footer .btn-book {
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 2.5rem;
     font-size: 1.05rem;
+    min-width: 160px;
+    max-width: 220px;
+    width: auto;
+    margin-left: 1.5rem;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 .train-footer .btn-book:disabled {

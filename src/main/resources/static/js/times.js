@@ -206,34 +206,21 @@ function displayTrains(trains) {
                 <div class="train-header">
                     <div class="train-number">
                         <span class="number">${train.trainNumber}</span>
-                        <span class="type ${train.trainType.toLowerCase()}">${train.trainType}</span>
                     </div>
                     <div class="train-name">${train.trainName}</div>
                 </div>
-                
                 <div class="train-route">
                     <div class="station departure">
                         <div class="station-name">${train.source}</div>
                         <div class="time">${formatTime(departureDate)}</div>
                         <div class="date">${formatDate(departureDate)}</div>
                     </div>
-                    
-                    <div class="journey-info">
-                        <div class="route-line">
-                            <div class="dot"></div>
-                            <div class="line"></div>
-                            <div class="dot"></div>
-                        </div>
-                        <div class="duration">${duration}</div>
-                    </div>
-                    
                     <div class="station arrival">
                         <div class="station-name">${train.destination}</div>
                         <div class="time">${formatTime(arrivalDate)}</div>
                         <div class="date">${formatDate(arrivalDate)}</div>
                     </div>
                 </div>
-                
                 <div class="train-details">
                     <div class="detail-item">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -248,7 +235,6 @@ function displayTrains(trains) {
                         <span>Total: ${train.totalSeats} seats</span>
                     </div>
                 </div>
-                
                 <div class="train-footer">
                     <div class="fare-info">
                         <span class="label">Fare per seat</span>
