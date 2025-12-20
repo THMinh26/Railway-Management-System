@@ -1,62 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Railway Booking</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/config.js"></script>
-    <script src="js/mock-api.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <h1>🚂 Railway Booking</h1>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="times.html">Train Times</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                    <li><a href="messages.html">Messages</a></li>
-                    <li><a href="login.html" class="active">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                </ul>
-            </div>
-        </nav>
+      <nav class="navbar">
+        <div class="container">
+          <div class="logo">
+            <h1>🚂 Railway Booking</h1>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main>
-        <section class="auth-section">
-            <div class="container">
-                <div class="auth-card">
-                    <h2>Login to Your Account</h2>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                    </form>
-                    <p class="auth-link">Don't have an account? <a href="register.html">Register here</a></p>
-                    <div id="message" class="message"></div>
-                </div>
-            </div>
-        </section>
+      <section class="auth-section">
+        <div class="container">
+          <div class="auth-card">
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter your username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+              <br />
+              <button type="submit" class="btn btn-primary btn-block">
+                Login
+              </button>
+            </form>
+            <p class="auth-link">
+              Don't have an account? <a href="register.html">Register here</a>
+            </p>
+            <div id="message" class="message"></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Railway Booking System. All rights reserved.</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2025 Railway Booking System. All rights reserved.</p>
+      </div>
     </footer>
 
     <script src="js/animations.js"></script>
     <script src="js/auth.js"></script>
-</body>
+  </body>
 </html>

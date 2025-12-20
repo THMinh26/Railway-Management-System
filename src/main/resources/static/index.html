@@ -1,177 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>National Railway - Book Train Tickets</title>
-    <link rel="stylesheet" href="css/style.css">
-    
+    <link rel="stylesheet" href="css/style.css" />
+
     <!-- API Configuration -->
     <script src="js/config.js"></script>
     <!-- Mock API - Để test không cần backend -->
     <script src="js/mock-api.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="container">
-            <div class="top-bar-content">
-                <div class="top-links">
-                    <a href="#">Help & Support</a>
-                    <a href="admin.html">Admin Panel</a>
-                </div>
-                <div class="top-auth">
-                    <a href="login.html" class="btn-link">Sign In</a>
-                    <a href="register.html" class="btn-link">Register</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="top-bar-content">
+          <div class="top-links">
+            <a href="#">Help & Support</a>
+            <a href="admin.html">Admin Panel</a>
+          </div>
+          <div class="top-auth">
+            <a href="login.html" class="btn-link">Sign In</a>
+            <a href="register.html" class="btn-link">Register</a>
+          </div>
         </div>
+      </div>
     </div>
 
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40">
-                            <rect width="40" height="40" fill="#E31E24" rx="4"/>
-                            <text x="20" y="28" font-size="24" font-weight="bold" fill="white" text-anchor="middle">NR</text>
-                        </svg>
-                    </div>
-                    <div class="logo-text">
-                        <h1>National Railway</h1>
-                        <span>Official Booking Portal</span>
-                    </div>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="times.html">Train Times</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                </ul>
+      <nav class="navbar">
+        <div class="container">
+          <div class="logo">
+            <div class="logo-icon">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <rect width="40" height="40" fill="#E31E24" rx="4" />
+                <text
+                  x="20"
+                  y="28"
+                  font-size="24"
+                  font-weight="bold"
+                  fill="white"
+                  text-anchor="middle"
+                >
+                  NR
+                </text>
+              </svg>
             </div>
-        </nav>
+            <div class="logo-text">
+              <h1>National Railway</h1>
+              <span>Official Booking Portal</span>
+            </div>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="times.html">Train Times</a></li>
+            <li><a href="bookings.html">My Bookings</a></li>
+          </ul>
+        </div>
+      </nav>
     </header>
 
     <main>
-        <section class="hero-banner">
-            <div class="container">
-                <div class="hero-content">
-                    <h2>Plan and buy your train tickets</h2>
-                    <p>Search times, compare prices and buy tickets for train travel throughout the country</p>
-                </div>
-            </div>
-        </section>
+      <section class="hero-banner">
+        <div class="container">
+          <div class="hero-content">
+            <h2>Plan and buy your train tickets</h2>
+            <p>
+              Search times, compare prices and buy tickets for train travel
+              throughout the country
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <section class="search-section">
-            <div class="container">
-                <div class="journey-planner">
-                    <div class="planner-tabs">
-                        <button class="tab-btn active">Single or Return</button>
-                        <button class="tab-btn">Season Ticket</button>
-                    </div>
-                    <form id="searchForm" class="journey-form">
-                        <div class="form-main">
-                            <div class="journey-stations">
-                                <div class="station-input-group autocomplete-wrapper">
-                                    <label for="source">From</label>
-                                    <input type="text" id="source" name="source" placeholder="e.g. Hanoi, Ho Chi Minh City" required autocomplete="off">
-                                    <div id="source-suggestions" class="suggestions-box"></div>
-                                </div>
-                                <button type="button" class="swap-btn" title="Swap stations">⇄</button>
-                                <div class="station-input-group autocomplete-wrapper">
-                                    <label for="destination">To</label>
-                                    <input type="text" id="destination" name="destination" placeholder="e.g. Da Nang, Hue" required autocomplete="off">
-                                    <div id="destination-suggestions" class="suggestions-box"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="journey-details">
-                                <div class="detail-group">
-                                    <label>
-                                        <input type="radio" name="journeyType" value="return" checked> Return
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="journeyType" value="single"> Single
-                                    </label>
-                                </div>
-                                
-                                <div class="date-time-group">
-                                    <div class="form-field">
-                                        <label for="outbound-date">Outbound Date</label>
-                                        <input type="date" id="outbound-date" name="date" required>
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="outbound-time">Time</label>
-                                        <select id="outbound-time">
-                                            <option>Leaving at</option>
-                                            <option>Arriving by</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="journey-actions">
-                                <button type="submit" class="btn-search">
-                                    <span>Get times & tickets</span>
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 0L8.59 1.41 15.17 8H0v2h15.17l-6.58 6.59L10 18l8-8z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+      <section class="search-section">
+        <div class="container">
+          <div class="journey-planner">
+            <div class="planner-tabs">
+              <button class="tab-btn active">Single or Return</button>
+              <button class="tab-btn">Season Ticket</button>
             </div>
-        </section>
+            <form id="searchForm" class="journey-form">
+              <div class="form-main">
+                <div class="journey-stations">
+                  <div class="station-input-group autocomplete-wrapper">
+                    <label for="source">From</label>
+                    <input
+                      type="text"
+                      id="source"
+                      name="source"
+                      placeholder="e.g. Hanoi, Ho Chi Minh City"
+                      required
+                      autocomplete="off"
+                    />
+                    <div id="source-suggestions" class="suggestions-box"></div>
+                  </div>
+                  <button type="button" class="swap-btn" title="Swap stations">
+                    ⇄
+                  </button>
+                  <div class="station-input-group autocomplete-wrapper">
+                    <label for="destination">To</label>
+                    <input
+                      type="text"
+                      id="destination"
+                      name="destination"
+                      placeholder="e.g. Da Nang, Hue"
+                      required
+                      autocomplete="off"
+                    />
+                    <div
+                      id="destination-suggestions"
+                      class="suggestions-box"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="journey-details">
+                  <div class="detail-group">
+                    <label>
+                      <input
+                        type="radio"
+                        name="journeyType"
+                        value="return"
+                        checked
+                      />
+                      Return
+                    </label>
+                    <label>
+                      <input type="radio" name="journeyType" value="single" />
+                      Single
+                    </label>
+                  </div>
+
+                  <div class="date-time-group">
+                    <div class="form-field">
+                      <label for="outbound-date">Outbound Date</label>
+                      <input
+                        type="date"
+                        id="outbound-date"
+                        name="date"
+                        required
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label for="outbound-time">Time</label>
+                      <select id="outbound-time">
+                        <option>Leaving at</option>
+                        <option>Arriving by</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="journey-actions">
+                  <button type="submit" class="btn-search">
+                    <span>Get times & tickets</span>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M10 0L8.59 1.41 15.17 8H0v2h15.17l-6.58 6.59L10 18l8-8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Help & Support</h4>
-                    <ul>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Refunds</a></li>
-                        <li><a href="#">Complaints</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Travel Info</h4>
-                    <ul>
-                        <li><a href="#">Station Facilities</a></li>
-                        <li><a href="#">Engineering Works</a></li>
-                        <li><a href="#">Passenger Charter</a></li>
-                        <li><a href="#">Travel Updates</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#">Facebook</a>
-                        <a href="#">Twitter</a>
-                        <a href="#">Instagram</a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Help & Support</h4>
+            <ul>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Refunds</a></li>
+              <li><a href="#">Complaints</a></li>
+              <li><a href="#">Accessibility</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Travel Info</h4>
+            <ul>
+              <li><a href="#">Station Facilities</a></li>
+              <li><a href="#">Engineering Works</a></li>
+              <li><a href="#">Passenger Charter</a></li>
+              <li><a href="#">Travel Updates</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Connect With Us</h4>
+            <div class="social-links">
+              <a href="#">Facebook</a>
+              <a href="#">Twitter</a>
+              <a href="#">Instagram</a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 National Railway. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
-            </div>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 National Railway. All rights reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a>
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/animations.js"></script>
     <script src="js/autocomplete.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

@@ -1,76 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - Railway Booking</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/config.js"></script>
+  </head>
+  <body>
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <h1>🚂 Railway Booking</h1>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="times.html">Train Times</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                    <li><a href="messages.html">Messages</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html" class="active">Register</a></li>
-                </ul>
-            </div>
-        </nav>
+      <nav class="navbar">
+        <div class="container">
+          <div class="logo">
+            <h1>🚂 Railway Booking</h1>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main>
-        <section class="auth-section">
-            <div class="container">
-                <div class="auth-card">
-                    <h2>Create New Account</h2>
-                    <form id="registerForm">
-                        <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" name="username" placeholder="Choose a username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number</label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Create a password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Register</button>
-                    </form>
-                    <p class="auth-link">Already have an account? <a href="login.html">Login here</a></p>
-                    <div id="message" class="message"></div>
-                </div>
-            </div>
-        </section>
+      <section class="auth-section">
+        <div class="container">
+          <div class="auth-card">
+            <h2>Create Your Account</h2>
+            <form id="registerForm">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Choose a username (3-15 characters)"
+                  pattern="[a-zA-Z0-9_]{3,15}"
+                  title="Username must be 3-15 characters (letters, numbers, underscore only)"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input
+                  type="text"
+                  id="fullname"
+                  name="fullname"
+                  placeholder="Enter your full name"
+                  maxlength="30"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  maxlength="50"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Enter your phone number (10-15 digits)"
+                  pattern="\d{10,15}"
+                  title="Phone number must be 10-15 digits"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Create a password (min. 6 characters)"
+                  minlength="6"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Re-enter your password"
+                  minlength="6"
+                  required
+                />
+              </div>
+              <br />
+              <button type="submit" class="btn btn-primary btn-block">
+                Register
+              </button>
+            </form>
+            <p class="auth-link">
+              Already have an account? <a href="login.html">Login here</a>
+            </p>
+            <div id="message" class="message"></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Railway Booking System. All rights reserved.</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2025 Railway Booking System. All rights reserved.</p>
+      </div>
     </footer>
 
     <script src="js/animations.js"></script>
     <script src="js/auth.js"></script>
-</body>
+  </body>
 </html>
