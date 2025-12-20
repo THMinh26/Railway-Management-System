@@ -1,0 +1,72 @@
+package com.rmt.railway_management_system.dto;
+
+public class LoginResponseDTO {
+    private String message;
+    private String username;
+    private String fullname;
+    private String email;
+    private String phone;
+    private boolean isAdmin;
+
+    public LoginResponseDTO() {
+    }
+
+    public LoginResponseDTO(String message, String username, String fullname, String email, String phone,
+            boolean isAdmin) {
+        this.message = message;
+        this.username = username;
+        this.fullname = fullname;
+        this.email = email;
+        this.phone = phone;
+        this.isAdmin = isAdmin;
+    }
+
+    // Getters and Setters
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+}
