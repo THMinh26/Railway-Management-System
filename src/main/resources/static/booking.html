@@ -1,296 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Train - National Railway</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="container">
-            <div class="top-bar-content">
-                <div class="top-links">
-                    <a href="#">Help & Support</a>
-                    <a href="admin.html">Admin Panel</a>
-                </div>
-                <div class="top-auth">
-                    <a href="login.html" class="btn-link">Sign In</a>
-                    <a href="register.html" class="btn-link">Register</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="top-bar-content">
+          <div class="top-links">
+            <a href="#">Help & Support</a>
+            <a href="admin.html">Admin Panel</a>
+          </div>
+          <div class="top-auth">
+            <a href="login.html" class="btn-link">Sign In</a>
+            <a href="register.html" class="btn-link">Register</a>
+          </div>
         </div>
+      </div>
     </div>
 
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40">
-                            <rect width="40" height="40" fill="#E31E24" rx="4"/>
-                            <text x="20" y="28" font-size="24" font-weight="bold" fill="white" text-anchor="middle">NR</text>
-                        </svg>
-                    </div>
-                    <div class="logo-text">
-                        <h1>National Railway</h1>
-                        <span>Official Booking Portal</span>
-                    </div>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="times.html">Train Times</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                </ul>
+      <nav class="navbar">
+        <div class="container">
+          <div class="logo">
+            <div class="logo-icon">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <rect width="40" height="40" fill="#E31E24" rx="4" />
+                <text
+                  x="20"
+                  y="28"
+                  font-size="24"
+                  font-weight="bold"
+                  fill="white"
+                  text-anchor="middle"
+                >
+                  NR
+                </text>
+              </svg>
             </div>
-        </nav>
+            <div class="logo-text">
+              <h1>National Railway</h1>
+              <span>Official Booking Portal</span>
+            </div>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="times.html">Train Times</a></li>
+            <li><a href="bookings.html">My Bookings</a></li>
+          </ul>
+        </div>
+      </nav>
     </header>
 
     <main>
-        <section class="page-header">
-            <div class="container">
-                <h1>Complete Your Booking</h1>
-                <p>Review train details and passenger information</p>
-            </div>
-        </section>
+      <section class="page-header">
+        <div class="container">
+          <h1>Complete Your Booking</h1>
+          <p>Review train details and passenger information</p>
+        </div>
+      </section>
 
-        <section class="booking-form-section">
-            <div class="container">
-                <div class="booking-layout">
-                    <!-- Left: Booking Form -->
-                    <div class="booking-main">
-                        <!-- Train Details Card -->
-                        <div class="info-card">
-                            <h3>Selected Train</h3>
-                            <div class="train-info">
-                                <div class="train-header">
-                                    <h4 id="trainName">Hanoi Express</h4>
-                                    <!-- Removed train-badge EXPRESS -->
-                                </div>
-                                <div class="train-route-info">
-                                    <div class="route-point">
-                                        <span class="time" id="departureTime">06:00</span>
-                                        <span class="station" id="source">Hanoi</span>
-                                    </div>
-                                    <div class="route-line">
-                                        <div class="arrow">→</div>
-                                        <span class="duration" id="duration">12h 00m</span>
-                                    </div>
-                                    <div class="route-point">
-                                        <span class="time" id="arrivalTime">18:00</span>
-                                        <span class="station" id="destination">Ho Chi Minh City</span>
-                                    </div>
-                                </div>
-                                <div class="train-meta">
-                                    <span id="trainNumber">TR001</span>
-                                    <span id="date">2025-11-10</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Passenger Details -->
-                        <div class="info-card">
-                            <h3>Passenger Details</h3>
-                            <form id="bookingForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="passengers">Number of Passengers</label>
-                                        <select id="passengers" name="passengers" required>
-                                            <option value="1">1 Passenger</option>
-                                            <option value="2">2 Passengers</option>
-                                            <option value="3">3 Passengers</option>
-                                            <option value="4">4 Passengers</option>
-                                            <option value="5">5 Passengers</option>
-                                            <option value="6">6 Passengers</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <!-- Coach and Seat Selection -->
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="coach">Coach</label>
-                                        <select id="coach" name="coach" required>
-                                            <option value="A">Coach A</option>
-                                            <option value="B">Coach B</option>
-                                            <option value="C">Coach C</option>
-                                            <option value="D">Coach D</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="seatNumber">Seat Number</label>
-                                        <input type="text" id="seatNumber" name="seatNumber" placeholder="e.g. 12" required />
-                                    </div>
-                                </div>
-
-                                <div id="passengerForms"></div>
-
-                                <div class="form-group">
-                                    <label for="email">Contact Email</label>
-                                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="phone">Contact Phone</label>
-                                    <input type="tel" id="phone" name="phone" placeholder="0901234567" required>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Payment Method -->
-                        <div class="info-card">
-                            <h3>Payment Method</h3>
-                            <div class="payment-methods">
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="credit" checked>
-                                    <div class="payment-card">
-                                        <span class="payment-icon">💳</span>
-                                        <div>
-                                            <strong>Credit/Debit Card</strong>
-                                            <small>Visa, Mastercard, JCB</small>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="momo">
-                                    <div class="payment-card">
-                                        <span class="payment-icon">📱</span>
-                                        <div>
-                                            <strong>MoMo</strong>
-                                            <small>E-Wallet Payment</small>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="bank">
-                                    <div class="payment-card">
-                                        <span class="payment-icon">🏦</span>
-                                        <div>
-                                            <strong>Bank Transfer</strong>
-                                            <small>Direct transfer</small>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Card Details (show when credit card selected) -->
-                            <div id="cardDetails" class="card-details">
-                                <div class="form-group">
-                                    <label for="cardNumber">Card Number</label>
-                                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="expiry">Expiry Date</label>
-                                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cvv">CVV</label>
-                                        <input type="text" id="cvv" placeholder="123" maxlength="3">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <section class="booking-form-section">
+        <div class="container">
+          <div class="booking-layout">
+            <!-- Left: Booking Form -->
+            <div class="booking-main">
+              <!-- Train Details Card -->
+              <div class="info-card">
+                <h3>Selected Train</h3>
+                <div class="train-info">
+                  <div class="train-header">
+                    <h4 id="trainName">Hanoi Express</h4>
+                    <!-- Removed train-badge EXPRESS -->
+                  </div>
+                  <div class="train-route-info">
+                    <div class="route-point">
+                      <span class="time" id="departureTime">06:00</span>
+                      <span class="station" id="source">Hanoi</span>
                     </div>
-
-                    <!-- Right: Booking Summary -->
-                    <div class="booking-sidebar">
-                        <div class="info-card booking-summary">
-                            <h3>Booking Summary</h3>
-                            
-                            <div class="summary-row">
-                                <span>Fare per seat</span>
-                                <span class="price" id="farePerSeat">1,500,000 VND</span>
-                            </div>
-                            
-                            <div class="summary-row">
-                                <span>Number of seats</span>
-                                <span id="seatCount">1</span>
-                            </div>
-                            
-                            <div class="summary-divider"></div>
-                            
-                            <div class="summary-row">
-                                <span>Subtotal</span>
-                                <span class="price" id="subtotal">1,500,000 VND</span>
-                            </div>
-                            
-                            <div class="summary-row">
-                                <span>Service Fee</span>
-                                <span class="price" id="serviceFee">50,000 VND</span>
-                            </div>
-                            
-                            <div class="summary-divider"></div>
-                            
-                            <div class="summary-row total">
-                                <span>Total Amount</span>
-                                <span class="price" id="totalAmount">1,550,000 VND</span>
-                            </div>
-
-                            <button type="button" class="btn-primary btn-book" id="confirmBooking">
-                                Confirm & Pay
-                            </button>
-
-                            <div class="security-note">
-                                <span>🔒</span>
-                                <small>Your payment information is secure and encrypted</small>
-                            </div>
-                        </div>
+                    <div class="route-line">
+                      <div class="arrow">→</div>
+                      <span class="duration" id="duration">12h 00m</span>
                     </div>
+                    <div class="route-point">
+                      <span class="time" id="arrivalTime">18:00</span>
+                      <span class="station" id="destination"
+                        >Ho Chi Minh City</span
+                      >
+                    </div>
+                  </div>
+                  <div class="train-meta">
+                    <span id="trainNumber">TR001</span>
+                    <span id="date">2025-11-10</span>
+                  </div>
                 </div>
+              </div>
+
+              <!-- Passenger Details -->
+              <div class="info-card">
+                <h3>Passenger Details</h3>
+                <form id="bookingForm">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="passengers">Number of Passengers</label>
+                      <select id="passengers" name="passengers" required>
+                        <option value="1">1 Passenger</option>
+                        <option value="2">2 Passengers</option>
+                        <option value="3">3 Passengers</option>
+                        <option value="4">4 Passengers</option>
+                        <option value="5">5 Passengers</option>
+                        <option value="6">6 Passengers</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Coach and Seat Selection -->
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="coach">Coach</label>
+                      <select id="coach" name="coach" required>
+                        <option value="">Select Coach</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="seatNumber">Seat Number</label>
+                      <select
+                        id="seatNumber"
+                        name="seatNumber"
+                        required
+                        disabled
+                      >
+                        <option value="">Select coach first</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div id="passengerForms"></div>
+
+                  <!-- <div class="form-group">
+                    <label for="email">Contact Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Contact Phone</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      placeholder="0901234567"
+                      required
+                    />
+                  </div> -->
+                </form>
+              </div>
+
+              <!-- Payment Method -->
+              <div class="info-card">
+                <h3>Payment Method</h3>
+                <div class="payment-methods">
+                  <label class="payment-option">
+                    <input type="radio" name="payment" value="credit" checked />
+                    <div class="payment-card">
+                      <span class="payment-icon">💳</span>
+                      <div>
+                        <strong>Credit/Debit Card</strong>
+                        <small>Visa, Mastercard, JCB</small>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label class="payment-option">
+                    <input type="radio" name="payment" value="momo" />
+                    <div class="payment-card">
+                      <span class="payment-icon">📱</span>
+                      <div>
+                        <strong>MoMo</strong>
+                        <small>E-Wallet Payment</small>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label class="payment-option">
+                    <input type="radio" name="payment" value="bank" />
+                    <div class="payment-card">
+                      <span class="payment-icon">🏦</span>
+                      <div>
+                        <strong>Bank Transfer</strong>
+                        <small>Direct transfer</small>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- Card Details (show when credit card selected) -->
+                <div id="cardDetails" class="card-details">
+                  <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input
+                      type="text"
+                      id="cardNumber"
+                      placeholder="1234 5678 9012 3456"
+                      maxlength="19"
+                    />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="expiry">Expiry Date</label>
+                      <input
+                        type="text"
+                        id="expiry"
+                        placeholder="MM/YY"
+                        maxlength="5"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="cvv">CVV</label>
+                      <input
+                        type="text"
+                        id="cvv"
+                        placeholder="123"
+                        maxlength="3"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
+
+            <!-- Right: Booking Summary -->
+            <div class="booking-sidebar">
+              <div class="info-card booking-summary">
+                <h3>Booking Summary</h3>
+
+                <div class="summary-row">
+                  <span>Fare per seat</span>
+                  <span class="price" id="farePerSeat">1,500,000 VND</span>
+                </div>
+
+                <div class="summary-row">
+                  <span>Number of seats</span>
+                  <span id="seatCount">1</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span class="price" id="subtotal">1,500,000 VND</span>
+                </div>
+
+                <div class="summary-row">
+                  <span>Service Fee</span>
+                  <span class="price" id="serviceFee">50,000 VND</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row total">
+                  <span>Total Amount</span>
+                  <span class="price" id="totalAmount">1,550,000 VND</span>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-primary btn-book"
+                  id="confirmBooking"
+                >
+                  Confirm & Pay
+                </button>
+
+                <div class="security-note">
+                  <span>🔒</span>
+                  <small
+                    >Your payment information is secure and encrypted</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Help & Support</h4>
-                    <ul>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Refunds</a></li>
-                        <li><a href="#">Complaints</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Travel Info</h4>
-                    <ul>
-                        <li><a href="#">Station Facilities</a></li>
-                        <li><a href="#">Engineering Works</a></li>
-                        <li><a href="#">Passenger Charter</a></li>
-                        <li><a href="#">Travel Updates</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#">Facebook</a>
-                        <a href="#">Twitter</a>
-                        <a href="#">Instagram</a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Help & Support</h4>
+            <ul>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Refunds</a></li>
+              <li><a href="#">Complaints</a></li>
+              <li><a href="#">Accessibility</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Travel Info</h4>
+            <ul>
+              <li><a href="#">Station Facilities</a></li>
+              <li><a href="#">Engineering Works</a></li>
+              <li><a href="#">Passenger Charter</a></li>
+              <li><a href="#">Travel Updates</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Connect With Us</h4>
+            <div class="social-links">
+              <a href="#">Facebook</a>
+              <a href="#">Twitter</a>
+              <a href="#">Instagram</a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 National Railway. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
-            </div>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 National Railway. All rights reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a>
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/booking.js"></script>
-</body>
+  </body>
 </html>
