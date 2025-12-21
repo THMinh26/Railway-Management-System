@@ -13,19 +13,17 @@ public class Train {
     @Column(name = "train_id", length = 8, nullable = false)
     private String trainId;
 
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "train_name", nullable = false)
+    private String trainName;
 
-    // Constructors
     public Train() {
     }
 
-    public Train(String trainId, String name) {
+    public Train(String trainId, String trainName) {
         this.trainId = trainId;
-        this.name = name;
+        this.trainName = trainName;
     }
 
-    // Getters and Setters
     public String getTrainId() {
         return trainId;
     }
@@ -34,19 +32,11 @@ public class Train {
         this.trainId = trainId;
     }
 
-    public String getName() {
-        return name;
+    public String getTrainName() {
+        return trainName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Train{" +
-                "trainId='" + trainId + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public void setTrainName(String trainName) {
+        this.trainName = trainName;
     }
 }

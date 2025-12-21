@@ -23,7 +23,6 @@ public class Seat {
     @Column(name = "seat_number", length = 5, nullable = false)
     private String seatNumber;
 
-    // Constructors
     public Seat() {
     }
 
@@ -33,7 +32,6 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
-    // Getters and Setters
     public String getSeatId() {
         return seatId;
     }
@@ -56,14 +54,5 @@ public class Seat {
 
     public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Seat{" +
-                "seatId='" + seatId + '\'' +
-                ", coach=" + (coach != null ? coach.getCoachId() : null) +
-                ", seatNumber='" + seatNumber + '\'' +
-                '}';
     }
 }

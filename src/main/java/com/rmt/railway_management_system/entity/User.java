@@ -1,78 +1,66 @@
 package com.rmt.railway_management_system.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Table(name = "useraccount")
 @Entity
+@Table(name = "useraccount", schema = "public")
 public class User {
 
     @Id
-    @Column(name = "username", length = 15, nullable = false)
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false, updatable = false)
+    private Integer userId;
 
-    @Column(name = "fullname", length = 30, nullable = false)
-    private String fullname;
+    @Column(name = "fullname", nullable = false, length = 30)
+    private String fullName;
 
-    @Column(name = "email", length = 50, unique = true, nullable = false)
+    @Column(name = "email", nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(name = "phone", length = 15, unique = true, nullable = false)
-    private String phone;
-
-    @Column(name = "password", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 
-    @Column(name = "role", nullable = false)
-    private String role = "USER"; // Default role is USER
+    @Column(name = "phone", nullable = false, unique = true, length = 15)
+    private String phone;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Booking> bookings = new ArrayList<>();
+    @Column(name = "role", nullable = false, length = 255)
+    private String role;
 
-    // Constructors
+    @Column(name = "username", nullable = false, unique = true, length = 15)
+    private String username;
+
     public User() {
     }
 
-    public User(String username, String fullname, String email, String phone, String password) {
-        this.username = username;
-        this.fullname = fullname;
+    public User(String fullName, String email, String password, String phone, String role, String username) {
+        this.fullName = fullName;
         this.email = email;
-        this.phone = phone;
         this.password = password;
-        this.role = "USER";
-    }
-
-    public User(String username, String fullname, String email, String phone, String password, String role) {
-        this.username = username;
-        this.fullname = fullname;
-        this.email = email;
         this.phone = phone;
-        this.password = password;
         this.role = role;
+        this.username = username;
     }
 
     // Getters and Setters
-    public String getUsername() {
-        return username;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -83,20 +71,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getRole() {
@@ -107,27 +95,11 @@ public class User {
         this.role = role;
     }
 
-    // Helper method to check if user is admin
-    public boolean isAdmin() {
-        return "ADMIN".equalsIgnoreCase(this.role);
+    public String getUsername() {
+        return username;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

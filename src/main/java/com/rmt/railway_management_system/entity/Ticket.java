@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "ticket", schema = "public")
 public class Ticket {
 
     @Id
@@ -21,37 +21,38 @@ public class Ticket {
     @JoinColumn(name = "booking_id", referencedColumnName = "booking_id", nullable = false)
     private Booking booking;
 
-    @Column(name = "seat_id", length = 15, nullable = false)
-    private String seatId;
+    @ManyToOne
+    @JoinColumn(name = "seat_id", referencedColumnName = "seat_id", nullable = false)
+    private Seat seat;
 
     @Column(name = "travel_date", nullable = false)
     private Date travelDate;
 
-    @Column(name = "start_station_id", length = 10, nullable = false)
-    private String startStationId;
+    @ManyToOne
+    @JoinColumn(name = "start_station_id", referencedColumnName = "station_id", nullable = false)
+    private Station startStation;
 
-    @Column(name = "end_station_id", length = 10, nullable = false)
-    private String endStationId;
+    @ManyToOne
+    @JoinColumn(name = "end_station_id", referencedColumnName = "station_id", nullable = false)
+    private Station endStation;
 
     @Column(name = "passenger_name", length = 50, nullable = false)
     private String passengerName;
 
-    // Constructors
     public Ticket() {
     }
 
-    public Ticket(String ticketId, Booking booking, String seatId, Date travelDate,
-            String startStationId, String endStationId, String passengerName) {
+    public Ticket(String ticketId, Booking booking, Seat seat, Date travelDate,
+            Station startStation, Station endStation, String passengerName) {
         this.ticketId = ticketId;
         this.booking = booking;
-        this.seatId = seatId;
+        this.seat = seat;
         this.travelDate = travelDate;
-        this.startStationId = startStationId;
-        this.endStationId = endStationId;
+        this.startStation = startStation;
+        this.endStation = endStation;
         this.passengerName = passengerName;
     }
 
-    // Getters and Setters
     public String getTicketId() {
         return ticketId;
     }
@@ -68,12 +69,12 @@ public class Ticket {
         this.booking = booking;
     }
 
-    public String getSeatId() {
-        return seatId;
+    public Seat getSeat() {
+        return seat;
     }
 
-    public void setSeatId(String seatId) {
-        this.seatId = seatId;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
 
     public Date getTravelDate() {
@@ -84,20 +85,20 @@ public class Ticket {
         this.travelDate = travelDate;
     }
 
-    public String getStartStationId() {
-        return startStationId;
+    public Station getStartStation() {
+        return startStation;
     }
 
-    public void setStartStationId(String startStationId) {
-        this.startStationId = startStationId;
+    public void setStartStation(Station startStation) {
+        this.startStation = startStation;
     }
 
-    public String getEndStationId() {
-        return endStationId;
+    public Station getEndStation() {
+        return endStation;
     }
 
-    public void setEndStationId(String endStationId) {
-        this.endStationId = endStationId;
+    public void setEndStation(Station endStation) {
+        this.endStation = endStation;
     }
 
     public String getPassengerName() {
@@ -106,18 +107,5 @@ public class Ticket {
 
     public void setPassengerName(String passengerName) {
         this.passengerName = passengerName;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "ticketId='" + ticketId + '\'' +
-                ", booking=" + (booking != null ? booking.getBookingId() : null) +
-                ", seatId='" + seatId + '\'' +
-                ", travelDate=" + travelDate +
-                ", startStationId='" + startStationId + '\'' +
-                ", endStationId='" + endStationId + '\'' +
-                ", passengerName='" + passengerName + '\'' +
-                '}';
     }
 }

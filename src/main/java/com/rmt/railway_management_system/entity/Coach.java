@@ -9,7 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "coach", uniqueConstraints = @UniqueConstraint(columnNames = { "train_id", "coach_number" }))
+@Table(name = "coach", uniqueConstraints = @UniqueConstraint(name = "coach_train_id_coach_number_key", columnNames = {
+        "train_id", "coach_name" }))
 public class Coach {
 
     @Id
@@ -17,28 +18,21 @@ public class Coach {
     private String coachId;
 
     @ManyToOne
-    @JoinColumn(name = "train_id", referencedColumnName = "train_id")
+    @JoinColumn(name = "train_id", referencedColumnName = "train_id", nullable = false)
     private Train train;
 
-    @Column(name = "coach_number", length = 10, nullable = false)
-    private String coachNumber;
+    @Column(name = "coach_name", length = 10, nullable = false)
+    private String coachName;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "type_id")
-    private SeatType seatType;
-
-    // Constructors
     public Coach() {
     }
 
-    public Coach(String coachId, Train train, String coachNumber, SeatType seatType) {
+    public Coach(String coachId, Train train, String coachName) {
         this.coachId = coachId;
         this.train = train;
-        this.coachNumber = coachNumber;
-        this.seatType = seatType;
+        this.coachName = coachName;
     }
 
-    // Getters and Setters
     public String getCoachId() {
         return coachId;
     }
@@ -55,29 +49,11 @@ public class Coach {
         this.train = train;
     }
 
-    public String getCoachNumber() {
-        return coachNumber;
+    public String getCoachName() {
+        return coachName;
     }
 
-    public void setCoachNumber(String coachNumber) {
-        this.coachNumber = coachNumber;
-    }
-
-    public SeatType getSeatType() {
-        return seatType;
-    }
-
-    public void setSeatType(SeatType seatType) {
-        this.seatType = seatType;
-    }
-
-    @Override
-    public String toString() {
-        return "Coach{" +
-                "coachId='" + coachId + '\'' +
-                ", train=" + (train != null ? train.getTrainId() : null) +
-                ", coachNumber='" + coachNumber + '\'' +
-                ", seatType=" + (seatType != null ? seatType.getTypeId() : null) +
-                '}';
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
     }
 }

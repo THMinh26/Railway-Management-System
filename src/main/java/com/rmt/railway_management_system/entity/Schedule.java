@@ -12,9 +12,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "schedule")
+@Table(name = "schedule", uniqueConstraints = {
+        @UniqueConstraint(name = "schedule_train_id_sequence_no_key", columnNames = { "train_id", "sequence_no" })
+})
 public class Schedule {
 
     @Embeddable
@@ -88,7 +91,6 @@ public class Schedule {
     @Column(name = "time_out")
     private Time timeOut;
 
-    // Constructors
     public Schedule() {
     }
 
@@ -101,7 +103,6 @@ public class Schedule {
         this.id = new ScheduleId(train.getTrainId(), station.getStationId());
     }
 
-    // Getters and Setters
     public ScheduleId getId() {
         return id;
     }
@@ -156,16 +157,5 @@ public class Schedule {
 
     public void setTimeOut(Time timeOut) {
         this.timeOut = timeOut;
-    }
-
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "train=" + (train != null ? train.getTrainId() : null) +
-                ", station=" + (station != null ? station.getStationId() : null) +
-                ", sequenceNo=" + sequenceNo +
-                ", timeIn=" + timeIn +
-                ", timeOut=" + timeOut +
-                '}';
     }
 }

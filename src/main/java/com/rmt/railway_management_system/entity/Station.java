@@ -16,7 +16,6 @@ public class Station {
     @Column(name = "name", length = 30, nullable = false, unique = true)
     private String name;
 
-    // Constructors
     public Station() {
     }
 
@@ -25,7 +24,6 @@ public class Station {
         this.name = name;
     }
 
-    // Getters and Setters
     public String getStationId() {
         return stationId;
     }
@@ -40,13 +38,5 @@ public class Station {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Station{" +
-                "stationId='" + stationId + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

@@ -1,8 +1,14 @@
 package com.rmt.railway_management_system.entity;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "booking")
@@ -13,7 +19,7 @@ public class Booking {
     private String bookingId;
 
     @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @Column(name = "booking_date", nullable = false)
@@ -25,7 +31,6 @@ public class Booking {
     @Column(name = "total", precision = 10, scale = 2, nullable = false)
     private BigDecimal total;
 
-    // Constructors
     public Booking() {
     }
 
@@ -37,7 +42,6 @@ public class Booking {
         this.total = total;
     }
 
-    // Getters and Setters
     public String getBookingId() {
         return bookingId;
     }
@@ -76,16 +80,5 @@ public class Booking {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
-    }
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingId='" + bookingId + '\'' +
-                ", user=" + (user != null ? user.getUsername() : null) +
-                ", bookingDate=" + bookingDate +
-                ", numberOfTickets=" + numberOfTickets +
-                ", total=" + total +
-                '}';
     }
 }
