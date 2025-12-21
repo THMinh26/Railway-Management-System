@@ -76,6 +76,9 @@ public class BookingServiceImpl implements BookingService {
             throw new Exception("No tickets found for this booking");
         }
 
+        for (int i = 0; i < tickets.size(); i++) {
+            ticketRepository.delete(tickets.get(i));
+        }
         Date travelDate = tickets.get(0).getTravelDate();
         LocalDate travel = travelDate.toLocalDate();
         LocalDate today = LocalDate.now();

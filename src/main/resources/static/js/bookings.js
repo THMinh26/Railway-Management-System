@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
   const bookingsList = document.getElementById('bookingsList');
-  
+
   if (!bookingsList) {
     console.error('bookingsList element not found');
     return;
   }
-  
+
   const user = getCurrentUser();
 
   if (!user) {
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function loadBookings(userId) {
   const bookingsList = document.getElementById('bookingsList');
-  
+
   try {
     const response = await fetch(`${API_BASE_URL}/booking/user/${userId}`);
 
@@ -38,30 +38,28 @@ async function loadBookings(userId) {
 
 function displayBookings(bookings) {
   const bookingsList = document.getElementById('bookingsList');
-  
+
   if (!bookingsList) {
     console.error('bookingsList element not found in displayBookings');
     return;
   }
-  
+
   if (bookings.length === 0) {
     bookingsList.innerHTML =
       '<p>You have no bookings yet. <a href="search.html">Search trains</a> to book your first ticket.</p>';
     return;
   }
-
+  console.log(bookings);
   bookingsList.innerHTML = bookings
+    .filter((booking) => booking.tickets && booking.tickets.length > 0)
     .map((booking) => {
-      const firstTicket =
-        booking.tickets && booking.tickets.length > 0
-          ? booking.tickets[0]
-          : null;
+      const firstTicket = booking.tickets[0];
       const canCancel = firstTicket
         ? canCancelBooking(firstTicket.travelDate)
         : false;
 
       return `
-        <div class="booking-card ${
+        <div class="booking-card${
           booking.status === 'CANCELLED' ? 'cancelled' : ''
         }">
             <div class="booking-header">
