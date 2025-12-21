@@ -44,6 +44,10 @@ function calculateDuration(departure, arrival) {
   }
 }
 
+let availableSeats = [];
+let passengerCount = 1;
+let train;
+
 // Fetch coaches for the selected train
 async function loadCoaches(trainId, travelDate) {
   const coachSelect = document.getElementById('coach');
@@ -105,35 +109,74 @@ async function loadSeats(coachId, travelDate) {
     }
 
     const seats = await response.json();
+    availableSeats = seats.filter((seat) => seat.available);
 
-    seatSelect.innerHTML = '<option value="">Select Seat</option>';
-    seatSelect.disabled = false;
-
-    seats.forEach((seat) => {
-      const option = document.createElement('option');
-      option.value = seat.seatId;
-      option.textContent = seat.available
-        ? `Seat ${seat.seatNumber}`
-        : `Seat ${seat.seatNumber} (Booked)`;
-      option.disabled = !seat.available;
-      option.dataset.seatNumber = seat.seatNumber;
-
-      if (!seat.available) {
-        option.style.color = '#999';
-      }
-
-      seatSelect.appendChild(option);
-    });
-
-    if (seats.filter((s) => s.available).length === 0) {
-      seatSelect.innerHTML = '<option value="">No seats available</option>';
-      seatSelect.disabled = true;
-    }
+    // Update all passenger seat selects
+    updateAllSeatSelects();
   } catch (error) {
     console.error('Error loading seats:', error);
-    seatSelect.innerHTML = '<option value="">Error loading seats</option>';
-    seatSelect.disabled = true;
+    availableSeats = [];
+    updateAllSeatSelects();
   }
+}
+
+// Update all seat select dropdowns
+function updateAllSeatSelects() {
+  for (let i = 1; i <= passengerCount; i++) {
+    const seatSelect = document.getElementById(`seat${i}`);
+    if (seatSelect) {
+      updateSeatSelect(seatSelect, i);
+    }
+  }
+}
+
+// Update individual seat select dropdown
+function updateSeatSelect(selectElement, passengerIndex) {
+  const selectedSeats = getSelectedSeats();
+  const currentSeat = selectElement.value;
+
+  selectElement.innerHTML = '<option value="">Select Seat</option>';
+
+  if (availableSeats.length === 0) {
+    selectElement.innerHTML = '<option value="">Select coach first</option>';
+    selectElement.disabled = true;
+    return;
+  }
+
+  selectElement.disabled = false;
+
+  availableSeats.forEach((seat) => {
+    const option = document.createElement('option');
+    option.value = seat.seatId;
+    option.textContent = `Seat ${seat.seatNumber}`;
+    option.dataset.seatNumber = seat.seatNumber;
+
+    // Disable if already selected by another passenger
+    if (selectedSeats.includes(seat.seatId) && seat.seatId !== currentSeat) {
+      option.disabled = true;
+      option.textContent += ' (Selected)';
+      option.style.color = '#999';
+    }
+
+    selectElement.appendChild(option);
+  });
+
+  // Restore previous selection if valid
+  if (currentSeat && availableSeats.some((s) => s.seatId === currentSeat)) {
+    selectElement.value = currentSeat;
+  }
+}
+
+// Get all currently selected seats
+function getSelectedSeats() {
+  const selected = [];
+  for (let i = 1; i <= passengerCount; i++) {
+    const seatSelect = document.getElementById(`seat${i}`);
+    if (seatSelect && seatSelect.value) {
+      selected.push(seatSelect.value);
+    }
+  }
+  return selected;
 }
 
 // Display train information
@@ -159,10 +202,6 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
-// Update passenger count
-let passengerCount = 1;
-let train;
-
 // Generate passenger forms
 function updatePassengerForms() {
   const container = document.getElementById('passengerForms');
@@ -178,9 +217,27 @@ function updatePassengerForms() {
                     <label for="name${i}">Full Name</label>
                     <input type="text" id="name${i}" name="name${i}" placeholder="Enter full name" required>
                 </div>
+                <div class="form-group">
+                  <label for="seat${i}">Seat Number</label>
+                  <select id="seat${i}" name="seat${i}" required disabled>
+                    <option value="">Select coach first</option>
+                  </select>
+                </div>
             </div>
         `;
     container.appendChild(passengerForm);
+
+    // Add change event listener to update other seat selects
+    const seatSelect = document.getElementById(`seat${i}`);
+    seatSelect.addEventListener('change', function () {
+      updateAllSeatSelects();
+    });
+
+    // If coach is already selected, load seats for new passenger forms
+    const coachSelect = document.getElementById('coach');
+    if (coachSelect.value && train.date) {
+      updateAllSeatSelects();
+    }
   }
 }
 
@@ -194,6 +251,85 @@ function updateSummary() {
   document.getElementById('seatCount').textContent = passengerCount;
   document.getElementById('subtotal').textContent = formatCurrency(subtotal);
   document.getElementById('totalAmount').textContent = formatCurrency(total);
+}
+
+// Create booking request
+async function createBooking() {
+  const userJSON = localStorage.getItem('currentUser');
+  if (!userJSON) {
+    alert('Please login to continue');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const user = JSON.parse(userJSON);
+  const coachSelect = document.getElementById('coach');
+  const coachId = coachSelect.value;
+
+  if (!coachId) {
+    alert('Please select a coach');
+    return;
+  }
+
+  // Collect passenger data
+  const passengers = [];
+  for (let i = 1; i <= passengerCount; i++) {
+    const name = document.getElementById(`name${i}`).value;
+    const seatId = document.getElementById(`seat${i}`).value;
+
+    if (!name) {
+      alert(`Please enter name for Passenger ${i}`);
+      return;
+    }
+    if (!seatId) {
+      alert(`Please select seat for Passenger ${i}`);
+      return;
+    }
+
+    passengers.push({
+      passengerName: name,
+      seatId: seatId,
+    });
+  }
+
+  const bookingData = {
+    userId: user.userId,
+    trainId: train.trainId,
+    travelDate: train.date,
+    startStationName: train.source,
+    endStationName: train.destination,
+    numberOfTickets: passengerCount,
+    total: train.fare * passengerCount + 50000,
+    passengers: passengers,
+  };
+
+  console.log(bookingData);
+
+  try {
+    const API_BASE_URL =
+      typeof CONFIG !== 'undefined'
+        ? CONFIG.API_BASE_URL
+        : 'http://localhost:8081';
+
+    const response = await fetch(`${API_BASE_URL}/booking`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Failed to create booking');
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Booking error:', error);
+    throw error;
+  }
 }
 
 // Initialize on page load
@@ -213,24 +349,24 @@ document.addEventListener('DOMContentLoaded', function () {
   // Coach selection - load seats when coach is selected
   document.getElementById('coach').addEventListener('change', function (e) {
     const coachId = e.target.value;
-    const seatSelect = document.getElementById('seatNumber');
 
     if (coachId && train.date) {
       loadSeats(coachId, train.date);
     } else {
-      seatSelect.innerHTML = '<option value="">Select coach first</option>';
-      seatSelect.disabled = true;
+      availableSeats = [];
+      updateAllSeatSelects();
     }
   });
 
-  // Event listeners
-  document
-    .getElementById('passengers')
-    .addEventListener('change', function (e) {
-      passengerCount = parseInt(e.target.value);
+  // Passenger count change
+  document.getElementById('passengers').addEventListener('input', function (e) {
+    const value = parseInt(e.target.value);
+    if (value >= 1 && value <= 10) {
+      passengerCount = value;
       updatePassengerForms();
       updateSummary();
-    });
+    }
+  });
 
   // Payment method toggle
   const paymentRadios = document.querySelectorAll('input[name="payment"]');
@@ -272,28 +408,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Confirm booking
   document
     .getElementById('confirmBooking')
-    .addEventListener('click', function () {
+    .addEventListener('click', async function () {
       const form = document.getElementById('bookingForm');
       if (!form.checkValidity()) {
         form.reportValidity();
-        return;
-      }
-
-      const coachSelect = document.getElementById('coach');
-      const seatSelect = document.getElementById('seatNumber');
-      const coach =
-        coachSelect.options[coachSelect.selectedIndex].dataset.coachName ||
-        coachSelect.value;
-      const seatNumber =
-        seatSelect.options[seatSelect.selectedIndex].dataset.seatNumber ||
-        seatSelect.value;
-
-      if (!coach) {
-        alert('Please select a coach');
-        return;
-      }
-      if (!seatNumber) {
-        alert('Please select a seat');
         return;
       }
 
@@ -313,18 +431,20 @@ document.addEventListener('DOMContentLoaded', function () {
       this.disabled = true;
       this.innerHTML = '<span class="spinner"></span> Processing...';
 
-      setTimeout(() => {
-        const bookingRef = 'BK' + Date.now().toString().slice(-6);
-        showSuccessModal(bookingRef, coach, seatNumber);
-
+      try {
+        const result = await createBooking();
+        showSuccessModal(result.bookingId);
+      } catch (error) {
+        alert('Booking failed: ' + error.message);
         this.disabled = false;
         this.innerHTML = 'Confirm & Pay';
-      }, 2000);
+      }
     });
 });
 
 // Show success modal
-function showSuccessModal(bookingRef, coach, seatNumber) {
+function showSuccessModal(bookingId) {
+  // ← Only need bookingId
   const modal = document.createElement('div');
   modal.className = 'success-modal';
   modal.innerHTML = `
@@ -335,11 +455,9 @@ function showSuccessModal(bookingRef, coach, seatNumber) {
             <p>Your train ticket has been booked successfully</p>
             <div class="booking-ref">
                 <strong>Booking Reference:</strong>
-                <span class="ref-code">${bookingRef}</span>
+                <span class="ref-code">${bookingId}</span>
             </div>
             <div class="success-details">
-                <p><strong>Coach:</strong> ${coach}</p>
-                <p><strong>Seat Number:</strong> ${seatNumber}</p>
                 <p>📧 Confirmation email sent to your email</p>
                 <p>📱 E-ticket will be sent to your phone</p>
             </div>

@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return new LoginResponseDTO(
+                user.getUserId(),
                 "Login successful",
                 user.getUsername(),
                 user.getFullName(),

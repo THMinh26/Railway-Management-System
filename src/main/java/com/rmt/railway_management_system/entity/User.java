@@ -14,7 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, updatable = false)
-    private Integer userId;
+    private int userId;
 
     @Column(name = "fullname", nullable = false, length = 30)
     private String fullName;
@@ -46,12 +46,11 @@ public class User {
         this.username = username;
     }
 
-    // Getters and Setters
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

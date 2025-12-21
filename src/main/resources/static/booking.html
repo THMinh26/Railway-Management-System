@@ -75,7 +75,6 @@
                 <div class="train-info">
                   <div class="train-header">
                     <h4 id="trainName">Hanoi Express</h4>
-                    <!-- Removed train-badge EXPRESS -->
                   </div>
                   <div class="train-route-info">
                     <div class="route-point">
@@ -100,26 +99,22 @@
                 </div>
               </div>
 
-              <!-- Passenger Details -->
               <div class="info-card">
                 <h3>Passenger Details</h3>
                 <form id="bookingForm">
                   <div class="form-row">
                     <div class="form-group">
                       <label for="passengers">Number of Passengers</label>
-                      <select id="passengers" name="passengers" required>
-                        <option value="1">1 Passenger</option>
-                        <option value="2">2 Passengers</option>
-                        <option value="3">3 Passengers</option>
-                        <option value="4">4 Passengers</option>
-                        <option value="5">5 Passengers</option>
-                        <option value="6">6 Passengers</option>
-                      </select>
+                      <input 
+                          type="number" 
+                          id="passengers" 
+                          name="passengers" 
+                          min="1" 
+                          max="10" 
+                          value="1"
+                          required
+                      />
                     </div>
-                  </div>
-
-                  <!-- Coach and Seat Selection -->
-                  <div class="form-row">
                     <div class="form-group">
                       <label for="coach">Coach</label>
                       <select id="coach" name="coach" required>
@@ -127,44 +122,11 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="seatNumber">Seat Number</label>
-                      <select
-                        id="seatNumber"
-                        name="seatNumber"
-                        required
-                        disabled
-                      >
-                        <option value="">Select coach first</option>
-                      </select>
-                    </div>
                   </div>
-
                   <div id="passengerForms"></div>
-
-                  <!-- <div class="form-group">
-                    <label for="email">Contact Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="phone">Contact Phone</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      placeholder="0901234567"
-                      required
-                    />
-                  </div> -->
                 </form>
               </div>
-
+              
               <!-- Payment Method -->
               <div class="info-card">
                 <h3>Payment Method</h3>

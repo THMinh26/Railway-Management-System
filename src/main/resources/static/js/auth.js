@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
           fullname: data.fullName || data.fullname,
           email: data.email,
           phone: data.phone,
-          role: data.role,
           isAdmin: String(data.role || '').toUpperCase() === 'ADMIN',
         };
 
