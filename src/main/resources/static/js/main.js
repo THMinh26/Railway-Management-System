@@ -84,6 +84,17 @@ function initSwapButton() {
 function updateNavigation() {
   const user = getCurrentUser();
   const navMenu = document.querySelector('.nav-menu');
+  
+  // Hide/show admin panel link based on user role
+  const adminLinks = document.querySelectorAll('a[href="admin.html"]');
+  adminLinks.forEach(link => {
+    if (user && user.role === 'ADMIN') {
+      link.style.display = '';
+    } else {
+      link.style.display = 'none';
+    }
+  });
+  
   // Update nav menu greeting (if present)
   if (navMenu && user) {
     const loginLink = navMenu.querySelector('a[href="login.html"]');
@@ -353,5 +364,5 @@ async function bookTrain(trainId) {
   });
 
   // Redirect to booking page with parameters
-  window.location.href = `/booking?${params.toString()}`;
+  window.location.href = `/api/booking?${params.toString()}`;
 }

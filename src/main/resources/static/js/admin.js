@@ -1,8 +1,5 @@
 // Admin Panel JavaScript
 
-// Set to false when frontend is used standalone (no backend).
-const API_ENABLED = false; // set to true when API is available
-const API_BASE = API_ENABLED ? 'http://localhost:8081/api' : '';
 let currentBookingId = null;
 let currentUserId = null;
 
@@ -64,7 +61,7 @@ async function loadStatistics() {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/stats`);
+        const response = await fetch(`${API_BASE_URL}/admin/stats`);
         const stats = await response.json();
         
         document.getElementById('totalBookings').textContent = stats.totalBookings;
@@ -105,8 +102,9 @@ async function loadAllBookings() {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/bookings`);
-        const bookings = await response.json();
+        const response = await fetch(`${API_BASE_URL}/admin/bookings`);
+        const data = await response.json();
+        const bookings = data.bookings || [];
         
         if (bookings.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No bookings found</td></tr>';
@@ -115,17 +113,17 @@ async function loadAllBookings() {
         
         tbody.innerHTML = bookings.map(booking => `
             <tr>
-                <td><strong>${booking.bookingReference}</strong></td>
-                <td>${booking.user?.fullName || 'N/A'}</td>
-                <td>${booking.train?.trainNumber || 'N/A'}<br>
-                    <small>${booking.train?.source} → ${booking.train?.destination}</small>
+                <td><strong>${booking.bookingId || 'undefined'}</strong></td>
+                <td>${booking.user?.username || 'N/A'}</td>
+                <td>N/A<br>
+                    <small>undefined → undefined</small>
                 </td>
-                <td>${booking.numberOfSeats}</td>
-                <td>₹${booking.totalFare}</td>
-                <td><span class="status-badge status-${booking.status.toLowerCase()}">${booking.status}</span></td>
+                <td>${booking.numberOfTickets || 'undefined'}</td>
+                <td>₹${booking.total || 'undefined'}</td>
+                <td><span class="status-badge status-${(booking.status || '').toLowerCase()}">${booking.status || 'UNKNOWN'}</span></td>
                 <td>
-                    <button class="action-btn btn-update" onclick="showUpdateModal(${booking.id})">Update</button>
-                    <button class="action-btn btn-cancel" onclick="cancelBooking(${booking.id})">Cancel</button>
+                    <button class="action-btn btn-update" onclick="showUpdateModal('${booking.bookingId}')">Update</button>
+                    <button class="action-btn btn-cancel" onclick="cancelBooking('${booking.bookingId}')">Cancel</button>
                 </td>
             </tr>
         `).join('');
@@ -160,8 +158,9 @@ async function loadAllUsers() {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/users`);
-        const users = await response.json();
+        const response = await fetch(`${API_BASE_URL}/admin/users`);
+        const data = await response.json();
+        const users = data.users || [];
         
         if (users.length === 0) {
             tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No users found</td></tr>';
@@ -170,13 +169,13 @@ async function loadAllUsers() {
         
         tbody.innerHTML = users.map(user => `
             <tr>
-                <td>${user.id}</td>
+                <td>${user.userId}</td>
                 <td>${user.username}</td>
                 <td>${user.fullName}</td>
                 <td>${user.email}</td>
-                <td>${user.phoneNumber || 'N/A'}</td>
+                <td>${user.phone || 'N/A'}</td>
                 <td>
-                    <button class="action-btn btn-message" onclick="showMessageModal(${user.id})">Send Message</button>
+                    <button class="action-btn btn-message" onclick="showMessageModal(${user.userId})">Send Message</button>
                 </td>
             </tr>
         `).join('');
@@ -205,7 +204,7 @@ async function submitUpdateStatus() {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/bookings/${currentBookingId}/status`, {
+        const response = await fetch(`${API_BASE_URL}/admin/bookings/${currentBookingId}/status`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -241,7 +240,7 @@ async function cancelBooking(bookingId) {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/bookings/${bookingId}`, {
+        const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -287,7 +286,7 @@ async function submitSendMessage() {
             return;
         }
 
-        const response = await fetch(`${API_BASE}/admin/users/${currentUserId}/notify`, {
+        const response = await fetch(`${API_BASE_URL}/admin/users/${currentUserId}/notify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
