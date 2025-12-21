@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.rmt.railway_management_system.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-    Optional<User> findByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findByUsername(String username);
 
-    Optional<User> findByPhone(String phone);
+    boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
 
