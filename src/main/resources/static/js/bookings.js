@@ -1,10 +1,12 @@
-const API_BASE_URL =
-  typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'http://localhost:8081';
-const bookingsList = document.getElementById('bookingsList');
-
 document.addEventListener('DOMContentLoaded', function () {
-  const userJSON = localStorage.getItem('currentUser');
-  const user = JSON.parse(userJSON);
+  const bookingsList = document.getElementById('bookingsList');
+  
+  if (!bookingsList) {
+    console.error('bookingsList element not found');
+    return;
+  }
+  
+  const user = getCurrentUser();
 
   if (!user) {
     bookingsList.innerHTML =
@@ -15,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function loadBookings(userId) {
+  const bookingsList = document.getElementById('bookingsList');
+  
   try {
     const response = await fetch(`${API_BASE_URL}/booking/user/${userId}`);
 
@@ -33,6 +37,13 @@ async function loadBookings(userId) {
 }
 
 function displayBookings(bookings) {
+  const bookingsList = document.getElementById('bookingsList');
+  
+  if (!bookingsList) {
+    console.error('bookingsList element not found in displayBookings');
+    return;
+  }
+  
   if (bookings.length === 0) {
     bookingsList.innerHTML =
       '<p>You have no bookings yet. <a href="search.html">Search trains</a> to book your first ticket.</p>';

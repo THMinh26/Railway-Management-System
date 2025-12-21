@@ -304,7 +304,7 @@ function displayTrains(trains) {
                         <span class="label">Fare per seat</span>
                         <span class="amount">₹${train.fare.toFixed(2)}</span>
                     </div>
-                    <button class="btn-book" onclick="goToBooking(${train.id})" 
+                    <button class="btn-book" onclick="goToBooking(${index})" 
                             ${train.availableSeats === 0 ? 'disabled' : ''}>
                         ${train.availableSeats === 0 ? 'Sold Out' : 'Book Now'}
                     </button>
@@ -344,10 +344,46 @@ function formatDate(date) {
     });
 }
 
-// Open booking modal
 // Redirect to booking page
-function goToBooking(trainId) {
-    window.location.href = `booking.html?trainId=${trainId}`;
+function goToBooking(trainIndex) {
+    // Check if user is logged in
+    const user = getCurrentUser();
+    if (!user) {
+        alert('Please login to book tickets');
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    // Find the train data by index
+    const train = allTrains[trainIndex];
+    
+    if (!train) {
+        alert('Train not found!');
+        return;
+    }
+    
+    // Get selected travel date or use today
+    const dateInput = document.getElementById('filterDate');
+    const travelDate = dateInput && dateInput.value ? dateInput.value : new Date().toISOString().split('T')[0];
+    
+    // Format departure and arrival times (extract time from ISO string)
+    const depDate = new Date(train.departureTime);
+    const arrDate = new Date(train.arrivalTime);
+    const departureTime = depDate.toTimeString().slice(0, 5); // HH:MM
+    const arrivalTime = arrDate.toTimeString().slice(0, 5);
+    
+    // Build URL with all required parameters
+    const params = new URLSearchParams({
+        trainId: train.trainNumber,
+        trainName: train.trainName,
+        source: train.source,
+        destination: train.destination,
+        departureTime: departureTime,
+        arrivalTime: arrivalTime,
+        date: travelDate
+    });
+    
+    window.location.href = `booking.html?${params.toString()}`;
 }
 
 function openBookingModal(trainId) {

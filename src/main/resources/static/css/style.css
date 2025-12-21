@@ -2830,6 +2830,21 @@ select {
   border-top: 1px solid var(--light-gray);
 }
 
+.card-details .form-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.card-details .form-row .form-group:last-child {
+  width: 95px;
+}
+
+.card-details .form-row .form-group:last-child input {
+  width: 100%;
+}
+
 /* Booking Summary */
 .booking-sidebar {
   display: flex;

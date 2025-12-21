@@ -23,7 +23,7 @@ import com.rmt.railway_management_system.service.BookingService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/api/booking")
 @CrossOrigin(origins = "*")
 public class BookingController {
 

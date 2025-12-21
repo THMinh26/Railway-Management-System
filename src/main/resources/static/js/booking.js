@@ -309,7 +309,7 @@ async function createBooking() {
     const API_BASE_URL =
       typeof CONFIG !== 'undefined'
         ? CONFIG.API_BASE_URL
-        : 'http://localhost:8081';
+        : 'http://localhost:8081/api';
 
     const response = await fetch(`${API_BASE_URL}/booking`, {
       method: 'POST',
