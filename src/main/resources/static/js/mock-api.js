@@ -150,22 +150,25 @@ const MockAPI = {
             u.username === username && u.password === password
         );
         
-        if (user) {
-            const { password, ...userWithoutPassword } = user;
-            MOCK_DATA.currentUser = userWithoutPassword;
-            
+        if (!user) {
             return {
-                success: true,
-                data: {
-                    token: 'mock-jwt-token-' + Date.now(),
-                    user: userWithoutPassword
-                }
+                success: false,
+                error: 'Invalid username or password'
             };
         }
         
+        // Convert roles array to single role string for consistency with backend
+        const role = user.roles.includes('ADMIN') ? 'ADMIN' : 'USER';
+        
+        // Return in the same format as backend LoginResponseDTO
         return {
-            success: false,
-            error: 'Invalid username or password'
+            userId: user.id,
+            message: 'Login successful',
+            username: user.username,
+            fullName: user.fullName,
+            email: user.email,
+            phone: user.phoneNumber,
+            role: role
         };
     },
     

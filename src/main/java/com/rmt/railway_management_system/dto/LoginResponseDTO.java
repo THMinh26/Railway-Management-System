@@ -72,11 +72,11 @@ public class LoginResponseDTO {
         this.phone = phone;
     }
 
-    public String role() {
+    public String getRole() {
         return role;
     }
 
-    public void setAdmin(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

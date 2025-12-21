@@ -19,7 +19,9 @@ function showMessage(elementId, message, type) {
 // Get current user from localStorage
 function getCurrentUser() {
   const userStr = localStorage.getItem('currentUser');
-  return userStr ? JSON.parse(userStr) : null;
+  const user = userStr ? JSON.parse(userStr) : null;
+  console.log('getCurrentUser() called. User data:', user);
+  return user;
 }
 
 // Save user to localStorage
@@ -89,9 +91,11 @@ function updateNavigation() {
   const adminLinks = document.querySelectorAll('a[href="admin.html"]');
   adminLinks.forEach(link => {
     if (user && user.role === 'ADMIN') {
-      link.style.display = '';
+      link.style.display = 'inline'; // Show the link
+      console.log('Admin link shown for user:', user.username, 'role:', user.role);
     } else {
-      link.style.display = 'none';
+      link.style.display = 'none'; // Hide the link
+      console.log('Admin link hidden. User:', user ? user.username : 'not logged in', 'role:', user ? user.role : 'N/A');
     }
   });
   

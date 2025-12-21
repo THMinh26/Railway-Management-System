@@ -54,14 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Normalize fields from LoginResponseDTO
+        console.log('Backend response:', data);
         const userData = {
           userId: data.userId,
           username: data.username,
           fullname: data.fullName || data.fullname,
           email: data.email,
           phone: data.phone,
-          isAdmin: String(data.role || '').toUpperCase() === 'ADMIN',
+          role: data.role || 'USER', // Save role field (ADMIN or USER)
         };
+        console.log('Saving user data to localStorage:', userData);
 
         localStorage.setItem('currentUser', JSON.stringify(userData));
         showMessage(

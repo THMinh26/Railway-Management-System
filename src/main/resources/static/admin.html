@@ -407,16 +407,22 @@
         // Check if user is admin before loading admin panel
         document.addEventListener('DOMContentLoaded', function() {
             const user = getCurrentUser();
+            console.log('Admin panel access check - User:', user);
+            console.log('User role:', user ? user.role : 'N/A');
+            console.log('Role type:', user ? typeof user.role : 'N/A');
+            console.log('Is ADMIN?', user ? user.role === 'ADMIN' : false);
+            
             if (!user) {
                 alert('Please login to access admin panel');
                 window.location.href = 'login.html';
                 return;
             }
             if (user.role !== 'ADMIN') {
-                alert('Access denied. Admin privileges required.');
+                alert('Access denied. Admin privileges required.\nYour role: ' + user.role);
                 window.location.href = 'index.html';
                 return;
             }
+            console.log('Access granted to admin panel');
         });
     </script>
     <script src="js/admin.js"></script>
