@@ -1,6 +1,7 @@
 package com.rmt.railway_management_system.dto;
 
 public class LoginResponseDTO {
+    private Integer userId;
     private String message;
     private String username;
     private String fullname;
@@ -11,14 +12,24 @@ public class LoginResponseDTO {
     public LoginResponseDTO() {
     }
 
-    public LoginResponseDTO(String message, String username, String fullname, String email, String phone,
+    public LoginResponseDTO(Integer userId, String message, String username, String fullname, String email,
+            String phone,
             String role) {
+        this.userId = userId;
         this.message = message;
         this.username = username;
         this.fullname = fullname;
         this.email = email;
         this.phone = phone;
         this.role = role;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {
