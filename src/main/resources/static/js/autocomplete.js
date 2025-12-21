@@ -198,6 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
     new StationAutocomplete('destination', 'destination-suggestions');
   }
 
+  // For times filter inputs
+  if (document.getElementById('filterSource')) {
+    new StationAutocomplete('filterSource', 'filterSource-suggestions');
+  }
+  if (document.getElementById('filterDestination')) {
+    new StationAutocomplete('filterDestination', 'filterDestination-suggestions');
+  }
+
   // For search page
   if (document.getElementById('searchSource')) {
     new StationAutocomplete('searchSource', 'searchSource-suggestions');

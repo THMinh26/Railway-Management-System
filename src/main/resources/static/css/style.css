@@ -1,6 +1,3 @@
-.station.departure {
-  /* removed to avoid override */
-}
 
 /* Force train-route to be two side-by-side columns and ensure top alignment */
 .train-route {
@@ -23,9 +20,6 @@
   padding: 0 !important;
 }
 
-.station.arrival {
-  /* removed to avoid override */
-}
 * {
   margin: 0;
   padding: 0;
@@ -184,6 +178,7 @@ body {
 .top-auth {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .top-bar a {
@@ -228,6 +223,15 @@ body {
 
 .btn-link:hover::after {
   display: none;
+}
+
+/* Greeting in top bar */
+.top-hello {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  transform: translateY(1px);
+  color: white;
 }
 
 /* Navbar */
@@ -1915,6 +1919,26 @@ select {
   margin-top: 0;
 }
 
+/* Make Filter and Clear look consistent in the filter column */
+.filter-row .form-group:last-child .btn-search,
+.filter-row .form-group:last-child .btn-clear {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-row .form-group:last-child .btn-search {
+  gap: 0.5rem;
+}
+
+.filter-row .form-group:last-child .btn-clear {
+  margin-left: 0; /* remove offset */
+}
+
 .filter-row .form-group {
   display: flex;
   flex-direction: column;
@@ -2595,6 +2619,15 @@ select {
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 2rem;
+  align-items: start;
+}
+
+/* Brute-force: ensure booking layout uses two columns on wide screens */
+.booking-form-section .container > .booking-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 400px !important;
+  gap: 2rem !important;
+  align-items: start !important;
 }
 
 .booking-main {
@@ -2799,11 +2832,30 @@ select {
 
 /* Booking Summary */
 .booking-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   position: sticky;
   top: 2rem;
   height: fit-content;
+  width: 400px;
+  margin-left: auto;
 }
 
+/* Ensure sidebar aligns to the top of the grid column */
+.booking-sidebar {
+  align-self: start;
+  margin-top: 0;
+}
+
+/* Brute-force: force sidebar column properties */
+.booking-form-section .container > .booking-layout > .booking-sidebar {
+  width: 400px !important;
+  margin-left: auto !important;
+  position: sticky !important;
+  top: 2rem !important;
+  align-self: start !important;
+}
 .booking-summary {
   background: white;
 }

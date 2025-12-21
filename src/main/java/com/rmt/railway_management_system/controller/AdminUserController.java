@@ -44,7 +44,7 @@ public class AdminUserController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve users", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to retrieve users", e.getMessage(), ""));
         }
     }
 
@@ -53,7 +53,7 @@ public class AdminUserController {
      * GET /api/admin/users/{userId}
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable String userId) {
+    public ResponseEntity<?> getUserById(@PathVariable Integer userId) {
         try {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
@@ -65,10 +65,10 @@ public class AdminUserController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("User not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "User not found", e.getMessage(), ""));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve user", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to retrieve user", e.getMessage(), ""));
         }
     }
 

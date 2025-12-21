@@ -62,7 +62,7 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BookingResponseDTO>> getUserBookings(@PathVariable String userId) {
+    public ResponseEntity<List<BookingResponseDTO>> getUserBookings(@PathVariable Integer userId) {
         List<BookingResponseDTO> bookings = bookingService.getUserBookings(userId);
         return ResponseEntity.ok(bookings);
     }

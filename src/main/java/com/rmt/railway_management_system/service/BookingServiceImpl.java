@@ -44,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
     private StationRepository stationRepository;
 
     @Override
-    public List<BookingResponseDTO> getUserBookings(String userId) {
+    public List<BookingResponseDTO> getUserBookings(Integer userId) {
         List<Booking> bookings = bookingRepository.findByUserId(userId);
 
         return bookings.stream()

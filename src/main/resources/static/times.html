@@ -63,14 +63,20 @@
                     <h3>Filter Trains</h3>
                     <form id="filterForm" class="filter-form">
                         <div class="filter-row">
-                            <div class="form-group">
-                                <label for="filterSource">From</label>
-                                <input type="text" id="filterSource" placeholder="Departure station" list="stations">
-                            </div>
-                            <div class="form-group">
-                                <label for="filterDestination">To</label>
-                                <input type="text" id="filterDestination" placeholder="Arrival station" list="stations">
-                            </div>
+                                                        <div class="form-group">
+                                                                <label for="filterSource">From</label>
+                                                                <div class="autocomplete-wrapper">
+                                                                    <input type="text" id="filterSource" placeholder="Departure station">
+                                                                    <div id="filterSource-suggestions" class="suggestions-box"></div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label for="filterDestination">To</label>
+                                                                <div class="autocomplete-wrapper">
+                                                                    <input type="text" id="filterDestination" placeholder="Arrival station">
+                                                                    <div id="filterDestination-suggestions" class="suggestions-box"></div>
+                                                                </div>
+                                                        </div>
                             <div class="form-group">
                                 <label for="filterDate">Date</label>
                                 <input type="date" id="filterDate">
@@ -87,13 +93,7 @@
                             </div>
                         </div>
                     </form>
-                    <datalist id="stations">
-                        <option value="Mumbai">
-                        <option value="Delhi">
-                        <option value="Bangalore">
-                        <option value="Chennai">
-                        <option value="Kolkata">
-                        <option value="Hyderabad">
+                    <!-- station suggestions are provided by autocomplete.js -->
                         <option value="Pune">
                         <option value="Ahmedabad">
                     </datalist>
@@ -203,6 +203,8 @@
     </footer>
 
     <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/autocomplete.js"></script>
     <script src="js/times.js"></script>
     <script>
         createScrollProgress();

@@ -84,7 +84,7 @@ function initSwapButton() {
 function updateNavigation() {
   const user = getCurrentUser();
   const navMenu = document.querySelector('.nav-menu');
-
+  // Update nav menu greeting (if present)
   if (navMenu && user) {
     const loginLink = navMenu.querySelector('a[href="login.html"]');
     const registerLink = navMenu.querySelector('a[href="register.html"]');
@@ -92,6 +92,7 @@ function updateNavigation() {
     if (loginLink) {
       loginLink.textContent = `Hi, ${user.username}`;
       loginLink.style.cursor = 'default';
+      loginLink.removeAttribute('href');
     }
 
     if (registerLink) {
@@ -102,6 +103,45 @@ function updateNavigation() {
         clearCurrentUser();
         window.location.href = 'index.html';
       });
+    }
+  }
+
+  // Update top bar auth links (Sign In / Register area)
+  const topAuth = document.querySelector('.top-auth');
+  if (topAuth) {
+    topAuth.innerHTML = '';
+    if (user) {
+      const hello = document.createElement('span');
+      hello.className = 'top-hello';
+      hello.textContent = `Hello, ${user.username}`;
+      hello.style.marginRight = '12px';
+
+      const logout = document.createElement('a');
+      logout.href = '#';
+      logout.className = 'btn-link';
+      logout.textContent = 'Logout';
+      logout.addEventListener('click', function (e) {
+        e.preventDefault();
+        clearCurrentUser();
+        window.location.href = 'index.html';
+      });
+
+      topAuth.appendChild(hello);
+      topAuth.appendChild(logout);
+    } else {
+      // default links when not logged in
+      const signIn = document.createElement('a');
+      signIn.href = 'login.html';
+      signIn.className = 'btn-link';
+      signIn.textContent = 'Sign In';
+
+      const register = document.createElement('a');
+      register.href = 'register.html';
+      register.className = 'btn-link';
+      register.textContent = 'Register';
+
+      topAuth.appendChild(signIn);
+      topAuth.appendChild(register);
     }
   }
 }

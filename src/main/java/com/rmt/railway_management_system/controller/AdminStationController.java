@@ -43,7 +43,7 @@ public class AdminStationController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve stations", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to retrieve stations", e.getMessage()));
         }
     }
 
@@ -57,14 +57,14 @@ public class AdminStationController {
             // Check if station ID already exists
             if (stationRepository.existsById(request.getStationId())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(new ErrorResponseDTO("Station ID already exists", 
+                        .body(new ErrorResponseDTO(HttpStatus.CONFLICT.value(), "Conflict", "Station ID already exists", 
                                 "Station with ID " + request.getStationId() + " already exists"));
             }
 
             // Check if station name already exists
             if (stationRepository.findByName(request.getName()).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(new ErrorResponseDTO("Station name already exists", 
+                        .body(new ErrorResponseDTO(HttpStatus.CONFLICT.value(), "Conflict", "Station name already exists", 
                                 "Station with name " + request.getName() + " already exists"));
             }
 
@@ -78,7 +78,7 @@ public class AdminStationController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to add station", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to add station", e.getMessage()));
         }
     }
 
@@ -91,7 +91,7 @@ public class AdminStationController {
         try {
             if (!stationRepository.existsById(stationId)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ErrorResponseDTO("Station not found", 
+                        .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Not Found", "Station not found", 
                                 "Station with ID " + stationId + " not found"));
             }
 
@@ -107,7 +107,7 @@ public class AdminStationController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to delete station", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to delete station", e.getMessage()));
         }
     }
 
@@ -128,10 +128,10 @@ public class AdminStationController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Station not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Not Found", "Station not found", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve station", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to retrieve station", e.getMessage()));
         }
     }
 }

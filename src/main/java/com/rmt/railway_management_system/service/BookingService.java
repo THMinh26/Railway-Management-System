@@ -6,7 +6,7 @@ import com.rmt.railway_management_system.dto.BookingRequestDTO;
 import com.rmt.railway_management_system.dto.BookingResponseDTO;
 
 public interface BookingService {
-    List<BookingResponseDTO> getUserBookings(String userId);
+    List<BookingResponseDTO> getUserBookings(Integer userId);
 
     BookingResponseDTO getBookingDetails(String bookingId);
 

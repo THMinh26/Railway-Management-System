@@ -7,11 +7,36 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="container">
+        <div class="top-bar-content">
+          <div class="top-links">
+            <a href="#">Help & Support</a>
+            <a href="admin.html">Admin Panel</a>
+          </div>
+          <div class="top-auth">
+            <a href="login.html" class="btn-link">Sign In</a>
+            <a href="register.html" class="btn-link">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <header>
       <nav class="navbar">
         <div class="container">
           <div class="logo">
-            <h1>🚂 Railway Booking</h1>
+            <div class="logo-icon">
+              <svg width="60" height="40" viewBox="0 0 40 40">
+                <rect width="40" height="40" fill="#E31E24" rx="4" />
+                <text x="20" y="28" font-size="24" font-weight="bold" fill="white" text-anchor="middle">RMT</text>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <h1>National Railway</h1>
+              <span>Official Booking Portal</span>
+            </div>
           </div>
           <ul class="nav-menu">
             <li><a href="index.html">Home</a></li>
@@ -49,6 +74,7 @@
     </footer>
 
     <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/bookings.js"></script>
   </body>
 </html>

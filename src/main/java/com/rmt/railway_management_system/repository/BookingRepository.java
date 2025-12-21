@@ -13,5 +13,5 @@ import com.rmt.railway_management_system.entity.Booking;
 public interface BookingRepository extends JpaRepository<Booking, String> {
 
     @Query("SELECT b FROM Booking b WHERE b.user.userId = :userId ORDER BY b.bookingDate DESC")
-    List<Booking> findByUserId(@Param("userId") String userId);
+    List<Booking> findByUserId(@Param("userId") Integer userId);
 }

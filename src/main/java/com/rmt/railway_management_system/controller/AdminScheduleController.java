@@ -60,7 +60,7 @@ public class AdminScheduleController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve schedules", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to retrieve schedules", e.getMessage(), ""));
         }
     }
 
@@ -83,8 +83,8 @@ public class AdminScheduleController {
             Schedule.ScheduleId scheduleId = new Schedule.ScheduleId(request.getTrainId(), request.getStationId());
             if (scheduleRepository.existsById(scheduleId)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(new ErrorResponseDTO("Schedule already exists", 
-                                "Schedule for train " + request.getTrainId() + " at station " + request.getStationId() + " already exists"));
+                        .body(new ErrorResponseDTO(HttpStatus.CONFLICT.value(), "Schedule already exists", 
+                                "Schedule for train " + request.getTrainId() + " at station " + request.getStationId() + " already exists", ""));
             }
 
             // Parse times
@@ -109,13 +109,13 @@ public class AdminScheduleController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponseDTO("Invalid time format", "Time format must be HH:mm:ss"));
+                    .body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Invalid time format", "Time format must be HH:mm:ss", ""));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Resource not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Resource not found", e.getMessage(), ""));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to create schedule", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to create schedule", e.getMessage(), ""));
         }
     }
 
@@ -151,13 +151,13 @@ public class AdminScheduleController {
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponseDTO("Invalid time format", "Time format must be HH:mm:ss"));
+                    .body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Invalid time format", "Time format must be HH:mm:ss", ""));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Schedule not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Schedule not found", e.getMessage(), ""));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to update schedule", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to update schedule", e.getMessage(), ""));
         }
     }
 
@@ -174,8 +174,8 @@ public class AdminScheduleController {
             
             if (!scheduleRepository.existsById(scheduleId)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ErrorResponseDTO("Schedule not found", 
-                                "Schedule for train " + trainId + " at station " + stationId + " not found"));
+                        .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Schedule not found", 
+                                "Schedule for train " + trainId + " at station " + stationId + " not found", ""));
             }
 
             // TODO: Add validation to check if active bookings depend on this schedule
@@ -190,7 +190,7 @@ public class AdminScheduleController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to delete schedule", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to delete schedule", e.getMessage(), ""));
         }
     }
 
@@ -217,7 +217,7 @@ public class AdminScheduleController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve schedules", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed to retrieve schedules", e.getMessage(), ""));
         }
     }
 

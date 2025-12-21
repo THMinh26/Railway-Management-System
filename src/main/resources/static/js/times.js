@@ -1,8 +1,10 @@
 // Train Times & Tickets Page
 
-// Frontend/demo mode flag
-const API_ENABLED = false; // set to true when backend is available
-const API_BASE_URL = API_ENABLED ? 'http://localhost:8081/api' : '';
+const DEMO_TRAINS = [
+    { id:1, trainNumber:'TR001', trainName:'Hanoi Express', trainType:'Express', source:'Hanoi', destination:'HCMC', departureTime:new Date().toISOString(), arrivalTime:new Date(Date.now()+5*3600*1000).toISOString(), availableSeats:10, totalSeats:200, fare:150000 },
+    { id:2, trainNumber:'TR002', trainName:'Coastal Line', trainType:'Regional', source:'Da Nang', destination:'Nha Trang', departureTime:new Date().toISOString(), arrivalTime:new Date(Date.now()+3*3600*1000).toISOString(), availableSeats:0, totalSeats:180, fare:120000 }
+];
+
 let allTrains = [];
 let selectedTrain = null;
 
@@ -88,41 +90,103 @@ async function loadAllTrains() {
         trainsList.innerHTML = '';
         noResults.style.display = 'none';
         
-        if (!API_ENABLED) {
-            // Demo trains
-            allTrains = [
-                { id:1, trainNumber:'TR001', trainName:'Hanoi Express', trainType:'Express', source:'Hanoi', destination:'HCMC', departureTime:new Date().toISOString(), arrivalTime:new Date(Date.now()+5*3600*1000).toISOString(), availableSeats:10, totalSeats:200, fare:150000 },
-                { id:2, trainNumber:'TR002', trainName:'Coastal Line', trainType:'Regional', source:'Da Nang', destination:'Nha Trang', departureTime:new Date().toISOString(), arrivalTime:new Date(Date.now()+3*3600*1000).toISOString(), availableSeats:0, totalSeats:180, fare:120000 }
-            ];
+        // If API_ENABLED is falsy, use demo trains
+        if (typeof API_ENABLED === 'undefined' || !API_ENABLED) {
+            allTrains = DEMO_TRAINS.slice();
             loadingSpinner.style.display = 'none';
             displayTrains(allTrains);
             return;
         }
 
-        const response = await fetch(`${API_BASE_URL}/trains`);
-        
-        if (!response.ok) {
-            throw new Error('Failed to fetch trains');
+        // Try to fetch schedules and construct train list from schedules
+        try {
+            const schedResp = await fetch(`${API_BASE_URL}/admin/schedules`);
+            if (schedResp.ok) {
+                const schedData = await schedResp.json();
+                const schedules = schedData.schedules || [];
+
+                // Group schedules by trainId
+                const trainsMap = new Map();
+                schedules.forEach(s => {
+                    const tId = s.trainId;
+                    if (!trainsMap.has(tId)) trainsMap.set(tId, []);
+                    trainsMap.get(tId).push(s);
+                });
+
+                const apiTrains = [];
+                const today = new Date().toISOString().split('T')[0];
+
+                trainsMap.forEach((scheds, trainId) => {
+                    // sort by sequenceNo
+                    scheds.sort((a,b)=>a.sequenceNo - b.sequenceNo);
+                    const first = scheds[0];
+                    const last = scheds[scheds.length-1];
+
+                    // build train object used by displayTrains
+                    apiTrains.push({
+                        id: trainId,
+                        trainNumber: trainId,
+                        trainName: first.trainName || trainId,
+                        trainType: 'Regular',
+                        source: first.stationName || first.stationId,
+                        destination: last.stationName || last.stationId,
+                        departureTime: `${today}T${first.timeOut || '00:00:00'}`,
+                        arrivalTime: `${today}T${last.timeIn || '00:00:00'}`,
+                        availableSeats: 50,
+                        totalSeats: 200,
+                        fare: 100000
+                    });
+                });
+
+                if (apiTrains.length > 0) {
+                    allTrains = apiTrains;
+                    loadingSpinner.style.display = 'none';
+                    displayTrains(allTrains);
+                    return;
+                }
+            }
+        } catch (e) {
+            console.warn('Failed to fetch schedules', e);
         }
-        
-        allTrains = await response.json();
-        
+
+        // If schedules approach failed, try admin trains endpoint
+        try {
+            const resp = await fetch(`${API_BASE_URL}/admin/trains`);
+            if (resp.ok) {
+                const data = await resp.json();
+                const trains = data.trains || [];
+                allTrains = trains.map(t => ({
+                    id: t.trainId,
+                    trainNumber: t.trainId,
+                    trainName: t.trainName,
+                    trainType: 'Regular',
+                    source: 'Unknown',
+                    destination: 'Unknown',
+                    departureTime: new Date().toISOString(),
+                    arrivalTime: new Date(Date.now()+3*3600*1000).toISOString(),
+                    availableSeats: 50,
+                    totalSeats: 200,
+                    fare: 100000
+                }));
+                loadingSpinner.style.display = 'none';
+                displayTrains(allTrains);
+                return;
+            }
+        } catch (e) {
+            console.warn('Failed to fetch admin trains', e);
+        }
+
+        // If all API attempts failed, fallback to demo
+        console.warn('API returned no usable train data, using demo data');
+        allTrains = DEMO_TRAINS.slice();
         loadingSpinner.style.display = 'none';
-        
-        if (allTrains.length === 0) {
-            noResults.style.display = 'block';
-        } else {
-            displayTrains(allTrains);
-        }
+        displayTrains(allTrains);
     } catch (error) {
         console.error('Error loading trains:', error);
         loadingSpinner.style.display = 'none';
-        trainsList.innerHTML = `
-            <div class="error-message">
-                <h3>Error loading trains</h3>
-                <p>Please try again later or contact support.</p>
-            </div>
-        `;
+        // Fallback to demo trains on error
+        allTrains = DEMO_TRAINS.slice();
+        displayTrains(allTrains);
     }
 }
 

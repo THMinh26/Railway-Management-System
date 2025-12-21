@@ -67,7 +67,7 @@
       <section class="booking-form-section">
         <div class="container">
           <div class="booking-layout">
-            <!-- Left: Booking Form -->
+            <!-- Left column: selected train + passenger details -->
             <div class="booking-main">
               <!-- Train Details Card -->
               <div class="info-card">
@@ -87,9 +87,7 @@
                     </div>
                     <div class="route-point">
                       <span class="time" id="arrivalTime">18:00</span>
-                      <span class="station" id="destination"
-                        >Ho Chi Minh City</span
-                      >
+                      <span class="station" id="destination">Ho Chi Minh City</span>
                     </div>
                   </div>
                   <div class="train-meta">
@@ -99,21 +97,14 @@
                 </div>
               </div>
 
+              <!-- Passenger Details Card -->
               <div class="info-card">
                 <h3>Passenger Details</h3>
                 <form id="bookingForm">
                   <div class="form-row">
                     <div class="form-group">
                       <label for="passengers">Number of Passengers</label>
-                      <input 
-                          type="number" 
-                          id="passengers" 
-                          name="passengers" 
-                          min="1" 
-                          max="10" 
-                          value="1"
-                          required
-                      />
+                      <input type="number" id="passengers" name="passengers" min="1" max="10" value="1" required />
                     </div>
                     <div class="form-group">
                       <label for="coach">Coach</label>
@@ -121,12 +112,15 @@
                         <option value="">Select Coach</option>
                       </select>
                     </div>
-                    <div class="form-group">
                   </div>
+
                   <div id="passengerForms"></div>
                 </form>
               </div>
-              
+            </div>
+
+            <!-- Right column: payment + summary -->
+            <aside class="booking-sidebar">
               <!-- Payment Method -->
               <div class="info-card">
                 <h3>Payment Method</h3>
@@ -165,43 +159,25 @@
                   </label>
                 </div>
 
-                <!-- Card Details (show when credit card selected) -->
                 <div id="cardDetails" class="card-details">
                   <div class="form-group">
                     <label for="cardNumber">Card Number</label>
-                    <input
-                      type="text"
-                      id="cardNumber"
-                      placeholder="1234 5678 9012 3456"
-                      maxlength="19"
-                    />
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
                   </div>
                   <div class="form-row">
                     <div class="form-group">
                       <label for="expiry">Expiry Date</label>
-                      <input
-                        type="text"
-                        id="expiry"
-                        placeholder="MM/YY"
-                        maxlength="5"
-                      />
+                      <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" />
                     </div>
                     <div class="form-group">
                       <label for="cvv">CVV</label>
-                      <input
-                        type="text"
-                        id="cvv"
-                        placeholder="123"
-                        maxlength="3"
-                      />
+                      <input type="text" id="cvv" placeholder="123" maxlength="3" />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Right: Booking Summary -->
-            <div class="booking-sidebar">
+              <!-- Booking Summary -->
               <div class="info-card booking-summary">
                 <h3>Booking Summary</h3>
 
@@ -234,22 +210,14 @@
                   <span class="price" id="totalAmount">1,550,000 VND</span>
                 </div>
 
-                <button
-                  type="button"
-                  class="btn-primary btn-book"
-                  id="confirmBooking"
-                >
-                  Confirm & Pay
-                </button>
+                <button type="button" class="btn-primary btn-book" id="confirmBooking">Confirm &amp; Pay</button>
 
                 <div class="security-note">
                   <span>🔒</span>
-                  <small
-                    >Your payment information is secure and encrypted</small
-                  >
+                  <small>Your payment information is secure and encrypted</small>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>

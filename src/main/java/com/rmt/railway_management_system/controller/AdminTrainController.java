@@ -43,7 +43,10 @@ public class AdminTrainController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve trains", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Internal Server Error",
+                            "Failed to retrieve trains",
+                            e.getMessage()));
         }
     }
 
@@ -57,7 +60,9 @@ public class AdminTrainController {
             // Check if train ID already exists
             if (trainRepository.existsById(request.getTrainId())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(new ErrorResponseDTO("Train ID already exists", 
+                        .body(new ErrorResponseDTO(HttpStatus.CONFLICT.value(),
+                                "Conflict",
+                                "Train ID already exists",
                                 "Train with ID " + request.getTrainId() + " already exists"));
             }
 
@@ -71,7 +76,10 @@ public class AdminTrainController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to add train", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Internal Server Error",
+                            "Failed to add train",
+                            e.getMessage()));
         }
     }
 
@@ -84,7 +92,9 @@ public class AdminTrainController {
         try {
             if (!trainRepository.existsById(trainId)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ErrorResponseDTO("Train not found", 
+                        .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(),
+                                "Not Found",
+                                "Train not found",
                                 "Train with ID " + trainId + " not found"));
             }
 
@@ -100,7 +110,10 @@ public class AdminTrainController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to delete train", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Internal Server Error",
+                            "Failed to delete train",
+                            e.getMessage()));
         }
     }
 
@@ -121,10 +134,16 @@ public class AdminTrainController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Train not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(),
+                            "Not Found",
+                            "Train not found",
+                            e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve train", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Internal Server Error",
+                            "Failed to retrieve train",
+                            e.getMessage()));
         }
     }
 }

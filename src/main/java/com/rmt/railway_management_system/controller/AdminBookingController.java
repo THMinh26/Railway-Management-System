@@ -7,7 +7,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.rmt.railway_management_system.dto.ErrorResponseDTO;
 import com.rmt.railway_management_system.entity.Booking;
@@ -42,7 +47,7 @@ public class AdminBookingController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve bookings", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to retrieve bookings", e.getMessage()));
         }
     }
 
@@ -63,10 +68,10 @@ public class AdminBookingController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Booking not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Not Found", "Booking not found", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve booking", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to retrieve booking", e.getMessage()));
         }
     }
 
@@ -93,10 +98,10 @@ public class AdminBookingController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponseDTO("Booking not found", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), "Not Found", "Booking not found", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to delete booking", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to delete booking", e.getMessage()));
         }
     }
 
@@ -105,7 +110,7 @@ public class AdminBookingController {
      * GET /api/admin/bookings/user/{userId}
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getBookingsByUserId(@PathVariable String userId) {
+    public ResponseEntity<?> getBookingsByUserId(@PathVariable Integer userId) {
         try {
             List<Booking> bookings = bookingRepository.findByUserId(userId);
             
@@ -117,7 +122,7 @@ public class AdminBookingController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponseDTO("Failed to retrieve bookings", e.getMessage()));
+                    .body(new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", "Failed to retrieve bookings", e.getMessage()));
         }
     }
 }
