@@ -6,22 +6,21 @@ public class LoginResponseDTO {
     private String fullname;
     private String email;
     private String phone;
-    private boolean isAdmin;
+    private String role;
 
     public LoginResponseDTO() {
     }
 
     public LoginResponseDTO(String message, String username, String fullname, String email, String phone,
-            boolean isAdmin) {
+            String role) {
         this.message = message;
         this.username = username;
         this.fullname = fullname;
         this.email = email;
         this.phone = phone;
-        this.isAdmin = isAdmin;
+        this.role = role;
     }
 
-    // Getters and Setters
     public String getMessage() {
         return message;
     }
@@ -62,11 +61,11 @@ public class LoginResponseDTO {
         this.phone = phone;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public String role() {
+        return role;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setAdmin(String role) {
+        this.role = role;
     }
 }
