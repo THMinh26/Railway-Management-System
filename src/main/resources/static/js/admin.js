@@ -91,12 +91,8 @@ async function loadAllBookings() {
                         <small>${booking.train?.source} → ${booking.train?.destination}</small>
                     </td>
                     <td>${booking.numberOfSeats}</td>
-                    <td>${booking.totalFare}</td>
+                    <td>${booking.totalFare}đ</td>
                     <td><span class="status-badge status-${booking.status.toLowerCase()}">${booking.status}</span></td>
-                    <td>
-                        <button class="action-btn btn-update" onclick="showUpdateModal(${booking.id})">Update</button>
-                        <button class="action-btn btn-cancel" onclick="cancelBooking(${booking.id})">Cancel</button>
-                    </td>
                 </tr>
             `).join('');
             return;
@@ -106,31 +102,48 @@ async function loadAllBookings() {
         const data = await response.json();
         const bookings = data.bookings || [];
         
+        // Debug: Log to see the actual structure
+        console.log('Raw bookings data:', bookings);
+        if (bookings.length > 0) {
+            console.log('First booking:', bookings[0]);
+            console.log('First booking tickets:', bookings[0].tickets);
+            if (bookings[0].tickets && bookings[0].tickets.length > 0) {
+                console.log('First ticket:', bookings[0].tickets[0]);
+            }
+            console.log('First booking user:', bookings[0].user);
+            console.log('First booking userId:', bookings[0].userId);
+        }
+        
         if (bookings.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No bookings found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No bookings found</td></tr>';
             return;
         }
         
-        tbody.innerHTML = bookings.map(booking => `
-            <tr>
-                <td><strong>${booking.bookingId || 'undefined'}</strong></td>
-                <td>${booking.user?.username || 'N/A'}</td>
-                <td>N/A<br>
-                    <small>undefined → undefined</small>
-                </td>
-                <td>${booking.numberOfTickets || 'undefined'}</td>
-                <td>₹${booking.total || 'undefined'}</td>
-                <td><span class="status-badge status-${(booking.status || '').toLowerCase()}">${booking.status || 'UNKNOWN'}</span></td>
-                <td>
-                    <button class="action-btn btn-update" onclick="showUpdateModal('${booking.bookingId}')">Update</button>
-                    <button class="action-btn btn-cancel" onclick="cancelBooking('${booking.bookingId}')">Cancel</button>
-                </td>
-            </tr>
-        `).join('');
+        tbody.innerHTML = bookings.map(booking => {
+            // Get train info from first ticket
+            const firstTicket = booking.tickets && booking.tickets.length > 0 ? booking.tickets[0] : null;
+            const trainId = firstTicket ? firstTicket.trainId : 'N/A';
+            const trainName = firstTicket ? firstTicket.trainName : 'N/A';
+            const startStation = firstTicket ? firstTicket.startStationName : 'undefined';
+            const endStation = firstTicket ? firstTicket.endStationName : 'undefined';
+            
+            return `
+                <tr>
+                    <td><strong>${booking.bookingId || 'undefined'}</strong></td>
+                    <td>${booking.username || 'N/A'}</td>
+                    <td>${trainId}<br>
+                        <small>${startStation} → ${endStation}</small>
+                    </td>
+                    <td>${booking.numberOfTickets || 'undefined'}</td>
+                    <td>${booking.total || 'undefined'}đ</td>
+                    <td><span class="status-badge status-${(booking.status || '').toLowerCase()}">${booking.status || 'UNKNOWN'}</span></td>
+                </tr>
+            `;
+        }).join('');
     } catch (error) {
         console.error('Error loading bookings:', error);
         document.getElementById('bookingsTableBody').innerHTML = 
-            '<tr><td colspan="7" style="text-align: center; color: red;">Error loading bookings</td></tr>';
+            '<tr><td colspan="6" style="text-align: center; color: red;">Error loading bookings</td></tr>';
     }
 }
 
@@ -186,80 +199,14 @@ async function loadAllUsers() {
     }
 }
 
-// Show Update Status Modal
-function showUpdateModal(bookingId) {
-    currentBookingId = bookingId;
-    document.getElementById('updateModal').classList.add('active');
-}
+// Show Update Status Modal - REMOVED
+// function showUpdateModal() {}
 
-// Submit Update Status
-async function submitUpdateStatus() {
-    const status = document.getElementById('updateStatus').value;
-    const reason = document.getElementById('updateReason').value;
-    
-    try {
-        if (!API_ENABLED) {
-            alert('Demo mode: booking status not sent to backend. Status would be: ' + status);
-            closeModal('updateModal');
-            return;
-        }
+// Submit Update Status - REMOVED
+// function submitUpdateStatus() {}
 
-        const response = await fetch(`${API_BASE_URL}/admin/bookings/${currentBookingId}/status`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ status, reason })
-        });
-
-        if (response.ok) {
-            alert('Booking status updated successfully!');
-            closeModal('updateModal');
-            loadAllBookings();
-            loadStatistics();
-        } else {
-            alert('Failed to update booking status');
-        }
-    } catch (error) {
-        console.error('Error updating booking:', error);
-        alert('Error updating booking status');
-    }
-}
-
-// Cancel Booking
-async function cancelBooking(bookingId) {
-    if (!confirm('Are you sure you want to cancel this booking?')) {
-        return;
-    }
-    
-    const reason = prompt('Enter cancellation reason (optional):');
-    
-    try {
-        if (!API_ENABLED) {
-            alert('Demo mode: booking cancellation not sent to backend. Reason: ' + (reason || ''));
-            return;
-        }
-
-        const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ reason: reason || '' })
-        });
-
-        if (response.ok) {
-            alert('Booking cancelled successfully!');
-            loadAllBookings();
-            loadStatistics();
-        } else {
-            alert('Failed to cancel booking');
-        }
-    } catch (error) {
-        console.error('Error cancelling booking:', error);
-        alert('Error cancelling booking');
-    }
-}
+// Cancel Booking - REMOVED
+// function cancelBooking() {}
 
 // Show Message Modal
 function showMessageModal(userId) {

@@ -6,6 +6,7 @@ import java.util.List;
 public class BookingResponseDTO {
     private String bookingId;
     private int userId;
+    private String username;
     private Date bookingDate;
     private int numberOfTickets;
     private Long total;
@@ -15,11 +16,12 @@ public class BookingResponseDTO {
     public BookingResponseDTO() {
     }
 
-    public BookingResponseDTO(String bookingId, int userId, Date bookingDate,
+    public BookingResponseDTO(String bookingId, int userId, String username, Date bookingDate,
             int numberOfTickets, Long total, String status,
             List<TicketResponseDTO> tickets) {
         this.bookingId = bookingId;
         this.userId = userId;
+        this.username = username;
         this.bookingDate = bookingDate;
         this.numberOfTickets = numberOfTickets;
         this.total = total;
@@ -41,6 +43,14 @@ public class BookingResponseDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getBookingDate() {

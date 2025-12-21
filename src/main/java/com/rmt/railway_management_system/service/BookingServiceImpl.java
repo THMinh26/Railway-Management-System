@@ -147,7 +147,7 @@ public class BookingServiceImpl implements BookingService {
         return mapToBookingResponseDTO(booking);
     }
 
-    private BookingResponseDTO mapToBookingResponseDTO(Booking booking) {
+    public BookingResponseDTO mapToBookingResponseDTO(Booking booking) {
         List<Ticket> tickets = ticketRepository.findByBookingId(booking.getBookingId());
 
         List<TicketResponseDTO> ticketDTOs = tickets.stream()
@@ -166,6 +166,7 @@ public class BookingServiceImpl implements BookingService {
         return new BookingResponseDTO(
                 booking.getBookingId(),
                 booking.getUser().getUserId(),
+                booking.getUser().getUsername(),
                 booking.getBookingDate(),
                 booking.getNumberOfTickets(),
                 booking.getTotal(),

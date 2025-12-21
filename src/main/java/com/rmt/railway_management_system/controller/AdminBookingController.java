@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rmt.railway_management_system.dto.BookingResponseDTO;
 import com.rmt.railway_management_system.dto.ErrorResponseDTO;
 import com.rmt.railway_management_system.entity.Booking;
 import com.rmt.railway_management_system.repository.BookingRepository;
 import com.rmt.railway_management_system.repository.TicketRepository;
+import com.rmt.railway_management_system.service.BookingService;
 
 @RestController
 @RequestMapping("/api/admin/bookings")
@@ -29,6 +31,9 @@ public class AdminBookingController {
 
     @Autowired
     private TicketRepository ticketRepository;
+    
+    @Autowired
+    private BookingService bookingService;
 
     /**
      * UC20: View All Bookings
@@ -39,10 +44,15 @@ public class AdminBookingController {
         try {
             List<Booking> bookings = bookingRepository.findAll();
             
+            // Map to DTOs with tickets included
+            List<BookingResponseDTO> bookingDTOs = bookings.stream()
+                    .map(booking -> bookingService.mapToBookingResponseDTO(booking))
+                    .toList();
+            
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Bookings retrieved successfully");
-            response.put("count", bookings.size());
-            response.put("bookings", bookings);
+            response.put("count", bookingDTOs.size());
+            response.put("bookings", bookingDTOs);
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
