@@ -1839,7 +1839,6 @@ a, button, input, select {
     gap: 1rem;
     position: relative;
 }
-}
 
 .train-number {
     display: flex;
@@ -1887,7 +1886,6 @@ a, button, input, select {
     color: var(--dark-navy);
     margin-left: auto;
     white-space: nowrap;
-}
 }
 
 /* Train Route */
@@ -2002,7 +2000,6 @@ a, button, input, select {
     border-top: 2px solid var(--light-gray);
     gap: 1.5rem;
 }
-}
 
 .fare-info {
     display: flex;
@@ -2020,7 +2017,6 @@ a, button, input, select {
     font-weight: 700;
     color: var(--success-green);
     margin-bottom: 0.5rem;
-}
 }
 
 .train-footer .btn-book {
