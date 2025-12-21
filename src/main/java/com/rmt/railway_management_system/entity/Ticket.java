@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,8 +16,9 @@ import jakarta.persistence.Table;
 public class Ticket {
 
     @Id
-    @Column(name = "ticket_id", length = 15, nullable = false)
-    private String ticketId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ticket_id", nullable = false)
+    private Integer ticketId;
 
     @ManyToOne
     @JoinColumn(name = "booking_id", referencedColumnName = "booking_id", nullable = false)
@@ -42,9 +45,8 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String ticketId, Booking booking, Seat seat, Date travelDate,
+    public Ticket(Booking booking, Seat seat, Date travelDate,
             Station startStation, Station endStation, String passengerName) {
-        this.ticketId = ticketId;
         this.booking = booking;
         this.seat = seat;
         this.travelDate = travelDate;
@@ -53,12 +55,8 @@ public class Ticket {
         this.passengerName = passengerName;
     }
 
-    public String getTicketId() {
+    public Integer getTicketId() {
         return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
     }
 
     public Booking getBooking() {

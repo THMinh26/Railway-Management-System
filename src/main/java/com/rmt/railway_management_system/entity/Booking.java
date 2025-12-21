@@ -1,6 +1,5 @@
 package com.rmt.railway_management_system.entity;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 
 import jakarta.persistence.Column;
@@ -29,17 +28,22 @@ public class Booking {
     private int numberOfTickets;
 
     @Column(name = "total", precision = 10, scale = 2, nullable = false)
-    private BigDecimal total;
+    private Long total;
+
+    @Column(name = "status", length = 20, nullable = false)
+    private String status;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, User user, Date bookingDate, int numberOfTickets, BigDecimal total) {
+    public Booking(String bookingId, User user, Date bookingDate, int numberOfTickets, Long total,
+            String status) {
         this.bookingId = bookingId;
         this.user = user;
         this.bookingDate = bookingDate;
         this.numberOfTickets = numberOfTickets;
         this.total = total;
+        this.status = status;
     }
 
     public String getBookingId() {
@@ -74,11 +78,19 @@ public class Booking {
         this.numberOfTickets = numberOfTickets;
     }
 
-    public BigDecimal getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(Long total) {
         this.total = total;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
